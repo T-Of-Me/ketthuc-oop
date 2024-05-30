@@ -1,0 +1,15 @@
+//                                     Thêm hàng hóa mới:
+// Người dùng nhập thông tin về mã hàng, tên hàng, số lượng tồn, đơn giá, và loại hàng (thực phẩm, điện máy, hay may mặc).
+// Dựa vào loại hàng, yêu cầu thêm thông tin cụ thể như ngày sản xuất, ngày hết hạn, nhà cung cấp (đối với hàng thực phẩm), thời gian bảo hành, công  suất KW, chủng loại (đối với hàng điện máy), hoặc thông tin nhà sản xuất và ngày nhập kho (đối với hàng may mặc).
+//                                    Cập nhật thông tin hàng hóa:
+// Người dùng nhập mã hàng để tìm kiếm hàng hóa cần cập nhật.
+// Cho phép cập nhật thông tin như số lượng tồn, đơn giá, ngày sản xuất, ngày hết hạn, công suất, chủng loại, nhà sản xuất, và ngày nhập kho.
+//                                          Xóa hàng hóa:
+// Người dùng nhập mã hàng để xóa hàng hóa khỏi kho.
+//                                          Tìm kiếm hàng hóa:
+// Người dùng nhập thông tin (mã hàng, tên hàng, loại hàng) để tìm kiếm hàng hóa.
+// Hiển thị danh sách các hàng hóa phù hợp với thông tin tìm kiếm.
+//                                             Thống kê tổng trị giá tồn:
+// Tính tổng trị giá tồn của tất cả các loại hàng hóa trong kho.
+//                                                Hiển thị danh sách hàng hóa:
+// Hiển thị danh sách tất cả các hàng hóa trong kho, bao gồm thông tin về mã hàng, tên hàng, số lượng tồn, đơn giá, và các thông tin khác tùy thuộc vào loại hàng.
