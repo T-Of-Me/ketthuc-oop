@@ -657,7 +657,7 @@ void TimKiem()
         ifstream File("ThucPham.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == ma)
+            if (a.ReturnMa() == ma && a.ReturnTenHang() == ten)
             {
                 a.print();
                 break;
@@ -679,7 +679,7 @@ void TimKiem()
         ifstream File("DienMay.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == ma)
+            if (a.ReturnMa() == ma && a.ReturnTenHang() == ten)
             {
                 a.print();
                 break;
@@ -701,7 +701,7 @@ void TimKiem()
         ifstream File("MayMac.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == ma)
+            if (a.ReturnMa() == ma && a.ReturnTenHang() == ten)
             {
                 a.print();
                 break;
