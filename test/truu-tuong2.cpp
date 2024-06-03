@@ -1,5 +1,5 @@
 #include <iostream>
-
+using namespace std;
 // Khai báo lớp trừu tượng "HinhHoc"
 class HinhHoc
 {
@@ -44,13 +44,13 @@ public:
     HinhChuNhat(double dai, double rong) : chieuDai(dai), chieuRong(rong) {}
 
     // Ghi đè phương thức "TinhDienTich"
-    double TinhDienTich() override
+    double TinhDienTich()
     {
         return chieuDai * chieuRong;
     }
 
     // Ghi đè phương thức "TinhChuVi"
-    double TinhChuVi() override
+    double TinhChuVi()
     {
         return 2 * (chieuDai + chieuRong);
     }
@@ -60,13 +60,13 @@ int main()
 {
     // Tạo đối tượng từ lớp "HinhTron"
     HinhTron hinhTron(5.0);
-    std::cout << "Diện tích hình tròn: " << hinhTron.TinhDienTich() << std::endl;
-    std::cout << "Chu vi hình tròn: " << hinhTron.TinhChuVi() << std::endl;
+    cout << "Diện tích hình tròn: " << hinhTron.TinhDienTich() << endl;
+    cout << "Chu vi hình tròn: " << hinhTron.TinhChuVi() << endl;
 
     // Tạo đối tượng từ lớp "HinhChuNhat"
     HinhChuNhat hinhChuNhat(4.0, 6.0);
-    std::cout << "Diện tích hình chữ nhật: " << hinhChuNhat.TinhDienTich() << std::endl;
-    std::cout << "Chu vi hình chữ nhật: " << hinhChuNhat.TinhChuVi() << std::endl;
+    cout << "Diện tích hình chữ nhật: " << hinhChuNhat.TinhDienTich() << endl;
+    cout << "Chu vi hình chữ nhật: " << hinhChuNhat.TinhChuVi() << endl;
 
     return 0;
 }

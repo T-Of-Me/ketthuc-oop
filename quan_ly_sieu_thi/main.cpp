@@ -16,29 +16,14 @@ protected:
 
 public:
     HangHoa(){};
+    friend void CapNhatThongTin();
     ~HangHoa(){};
-    virtual void print()
+    void print()
     {
         cout << "Ma hang :" << MaHang << endl;
         cout << "Ten hang :" << TenHang << endl;
         cout << "So luong ton kho :" << SoLuongTon << endl;
         cout << "Don gia :" << DonGia << endl;
-    }
-    int ReturnMa()
-    {
-        return MaHang;
-    }
-    string ReturnTenHang()
-    {
-        return TenHang;
-    }
-    int ReturnSoLuong()
-    {
-        return SoLuongTon;
-    }
-    int ReturnDonGia()
-    {
-        return DonGia;
     }
 };
 
@@ -179,36 +164,12 @@ private:
     string NhaCungCap;
 
 public:
-    int ReturnNgaySanXuat()
-    {
-        return NgayHetHan;
-    }
-    int ReturnThangSanXuat()
-    {
-        return ThangSanXuat;
-    }
-    int ReturnNamSanXuat()
-    {
-        return NamSanXuat;
-    }
-    int ReturnNgayHetHan()
-    {
-        return NgayHetHan;
-    }
-    int ReturnThangHetHan()
-    {
-        return ThangHetHan;
-    }
-    int ReturnNamHetHan()
-    {
-        return NamHetHan;
-    }
-    string ReturnNhaCungCap()
-    {
-        return NhaCungCap;
-    }
+    friend void CapNhatThongTin();
+    friend int CheckMaHangHoaTonTai(int c, int b, string a);
+    friend void TimKiem();
     ThucPhamDoc(){};
     ~ThucPhamDoc(){};
+    friend void XoaHangHoa();
     friend ostream &operator<<(ostream &out, ThucPhamDoc x)
     {
         out << x.MaHang << endl;
@@ -309,18 +270,11 @@ private:
     string ChungLoai;
 
 public:
-    string ReturnChungLoai()
-    {
-        return ChungLoai;
-    }
-    int ReturnThoiGianBaoHanh()
-    {
-        return ThoiGianBaoHanh;
-    }
-    int ReturnCongXuat()
-    {
-        return CongXuat;
-    }
+    friend void CapNhatThongTin();
+    friend void XoaHangHoa();
+    friend int CheckMaHangHoaTonTai(int c, int b, string a);
+    friend void TimKiem();
+    friend void CapNhatThongTinDienMay();
     DienMayDoc(int mahang, int soluong, int dongia, int thoigianbaohanh, int congxuat, string tenhang, string chungloai)
     {
         this->MaHang = mahang;
@@ -459,22 +413,11 @@ public:
         cout << "ten nha san xuat :" << TenNhaSanXuat << endl;
         cout << "ngay nhap :" << NgayNhapKho << "/" << ThangNhapKho << "/" << NamNhapKho << endl;
     }
-    int ReturnNgayNgapKho()
-    {
-        return NgayNhapKho;
-    }
-    int ReturnThangNgapKho()
-    {
-        return ThangNhapKho;
-    }
-    int ReturnNamNgapKho()
-    {
-        return NamNhapKho;
-    }
-    string ReturnTenNhaSanXuat()
-    {
-        return TenNhaSanXuat;
-    }
+    friend void CapNhatThongTin();
+    friend void TimKiem();
+    friend void XoaHangHoa();
+    friend void CapNhatThongTinMayMac();
+    friend int CheckMaHangHoaTonTai(int c, int b, string a);
     MayMacDoc(int mahang, int soluong, int dongia, int ngay, int thang, int nam, string tenhang, string tennhasanxuat)
     {
         this->MaHang = mahang;
@@ -518,6 +461,7 @@ public:
         return in;
     }
 };
+
 int CheckMaHangHoaTonTai(int chose, int z, string ten)
 {
     if (chose == 1)
@@ -526,7 +470,7 @@ int CheckMaHangHoaTonTai(int chose, int z, string ten)
         ifstream File("ThucPham.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == z && a.ReturnTenHang() == ten)
+            if (a.MaHang == z && a.TenHang == ten)
             {
                 cout << "Ma hang hoa ton tai " << endl;
                 return 1;
@@ -541,7 +485,7 @@ int CheckMaHangHoaTonTai(int chose, int z, string ten)
         ifstream File("DienMay.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == z && a.ReturnTenHang() == ten)
+            if (a.MaHang == z && a.TenHang == ten)
             {
                 cout << "Ma hang hoa ton tai " << endl;
                 return 1;
@@ -556,7 +500,7 @@ int CheckMaHangHoaTonTai(int chose, int z, string ten)
         ifstream File("MayMac.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == z && a.ReturnTenHang() == ten)
+            if (a.MaHang == z && a.TenHang == ten)
             {
                 cout << "Ma hang hoa ton tai " << endl;
                 return 1;
@@ -633,6 +577,7 @@ void ThemHangHoa()
     }
 }
 //=====================================================================================================================================================
+
 void TimKiem()
 {
     cout << "1 tim thuc pham" << endl;
@@ -657,7 +602,7 @@ void TimKiem()
         ifstream File("ThucPham.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == ma && a.ReturnTenHang() == ten)
+            if (a.MaHang == ma && a.TenHang == ten)
             {
                 a.print();
                 break;
@@ -679,7 +624,7 @@ void TimKiem()
         ifstream File("DienMay.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == ma && a.ReturnTenHang() == ten)
+            if (a.MaHang == ma && a.TenHang == ten)
             {
                 a.print();
                 break;
@@ -701,7 +646,7 @@ void TimKiem()
         ifstream File("MayMac.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == ma && a.ReturnTenHang() == ten)
+            if (a.MaHang == ma && a.TenHang == ten)
             {
                 a.print();
                 break;
@@ -734,7 +679,7 @@ void CapNhatThongTinDienMay()
         ifstream File("DienMay.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == ma && a.ReturnTenHang() == t)
+            if (a.MaHang == ma && a.TenHang == t)
             {
                 cout << "da tim thay ma ....." << endl;
                 checking = true;
@@ -752,16 +697,16 @@ void CapNhatThongTinDienMay()
     ofstream File2("DienMayTemp.txt", ios::trunc);
     while (File1 >> a)
     {
-        if (a.ReturnMa() == ma && a.ReturnTenHang() == t)
+        if (a.MaHang == ma && a.TenHang == t)
         {
             cout << " Loading........" << endl;
-            soluong = a.ReturnSoLuong();
-            dongia = a.ReturnDonGia();
-            thoigianbaohanh = a.ReturnThoiGianBaoHanh();
-            congxuat = a.ReturnCongXuat();
-            const char *t = a.ReturnTenHang().c_str();
+            soluong = a.SoLuongTon;
+            dongia = a.DonGia;
+            thoigianbaohanh = a.ThoiGianBaoHanh;
+            congxuat = a.CongXuat;
+            const char *t = a.TenHang.c_str();
             strcpy(tenhang, t);
-            const char *k = a.ReturnChungLoai().c_str();
+            const char *k = a.ChungLoai.c_str();
             strcpy(chungloai, k);
         }
         else
@@ -862,7 +807,7 @@ void CapNhatThongTinMayMac()
         ifstream File("MayMac.txt", ios::in);
         while (File >> a)
         {
-            if (a.ReturnMa() == ma && a.ReturnTenHang() == t)
+            if (a.MaHang == ma && a.TenHang == t)
             {
                 cout << "da tim thay ma ....." << endl;
                 checking = true;
@@ -879,17 +824,17 @@ void CapNhatThongTinMayMac()
     ofstream File2("MayMacTemp.txt", ios::trunc);
     while (File1 >> a)
     {
-        if (a.ReturnMa() == ma && a.ReturnTenHang() == t)
+        if (a.MaHang == ma && a.TenHang == t)
         {
             cout << " Loading........" << endl;
-            soluong = a.ReturnSoLuong();
-            dongia = a.ReturnDonGia();
-            ngay = a.ReturnNgayNgapKho();
-            thang = a.ReturnThangNgapKho();
-            nam = a.ReturnNamNgapKho();
-            const char *t = a.ReturnTenHang().c_str();
+            soluong = a.SoLuongTon;
+            dongia = a.DonGia;
+            ngay = a.NgayNhapKho;
+            thang = a.ThangNhapKho;
+            nam = a.NamNhapKho;
+            const char *t = a.TenHang.c_str();
             strcpy(tenhang, t);
-            const char *k = a.ReturnTenNhaSanXuat().c_str();
+            const char *k = a.TenNhaSanXuat.c_str();
             strcpy(tennhasanxuat, k);
         }
         else
@@ -1011,7 +956,7 @@ void CapNhatThongTin()
             ifstream File("ThucPham.txt", ios::in);
             while (File >> a)
             {
-                if (a.ReturnMa() == ma && a.ReturnTenHang() == t)
+                if (a.MaHang == ma && a.TenHang == t)
                 {
                     cout << "da tim thay ma ....." << endl;
                     checking = true;
@@ -1030,20 +975,20 @@ void CapNhatThongTin()
         ofstream File2("ThucPhamTemp.txt", ios::trunc);
         while (File1 >> a)
         {
-            if (a.ReturnMa() == ma && a.ReturnTenHang() == t)
+            if (a.MaHang == ma && a.TenHang == t)
             {
                 cout << " Loading........" << endl;
-                soluong = a.ReturnSoLuong();
-                dongia = a.ReturnDonGia();
-                ngayh = a.ReturnNgayHetHan();
-                thangh = a.ReturnThangHetHan();
-                namh = a.ReturnNamHetHan();
-                ngays = a.ReturnNgaySanXuat();
-                thangs = a.ReturnThangSanXuat();
-                nams = a.ReturnNamSanXuat();
-                const char *t = a.ReturnTenHang().c_str();
+                soluong = a.SoLuongTon;
+                dongia = a.DonGia;
+                ngayh = a.NgayHetHan;
+                thangh = a.ThangHetHan;
+                namh = a.NamHetHan;
+                ngays = a.NgaySanXuat;
+                thangs = a.ThangSanXuat;
+                nams = a.NamSanXuat;
+                const char *t = a.TenHang.c_str();
                 strcpy(tenhang, t);
-                const char *k = a.ReturnNhaCungCap().c_str();
+                const char *k = a.NhaCungCap.c_str();
                 strcpy(nhacungcap, k);
             }
             else
@@ -1214,7 +1159,7 @@ void XoaHangHoa()
             ifstream File("ThucPham.txt", ios::in);
             while (File >> a)
             {
-                if (a.ReturnMa() == ma)
+                if (a.MaHang == ma)
                 {
                     cout << "da tim thay ma ....." << endl;
                     checking = true;
@@ -1233,7 +1178,7 @@ void XoaHangHoa()
         ofstream File2("ThucPhamTemp.txt", ios::trunc);
         while (File1 >> a)
         {
-            if (a.ReturnMa() == ma)
+            if (a.MaHang == ma)
             {
                 cout << " Loading........" << endl;
             }
@@ -1266,7 +1211,7 @@ void XoaHangHoa()
             ifstream File("DienMay.txt", ios::in);
             while (File >> a)
             {
-                if (a.ReturnMa() == ma)
+                if (a.MaHang == ma)
                 {
                     cout << "da tim thay ma ....." << endl;
                     checking = true;
@@ -1284,7 +1229,7 @@ void XoaHangHoa()
         ofstream File2("DienMayTemp.txt", ios::trunc);
         while (File1 >> a)
         {
-            if (a.ReturnMa() == ma)
+            if (a.MaHang == ma)
             {
                 cout << " Loading........" << endl;
             }
@@ -1317,7 +1262,7 @@ void XoaHangHoa()
             ifstream File("MayMac.txt", ios::in);
             while (File >> a)
             {
-                if (a.ReturnMa() == ma)
+                if (a.MaHang == ma)
                 {
                     cout << "da tim thay ma ....." << endl;
                     checking = true;
@@ -1334,7 +1279,7 @@ void XoaHangHoa()
         ofstream File2("MayMacTemp.txt", ios::trunc);
         while (File1 >> a)
         {
-            if (a.ReturnMa() == ma)
+            if (a.MaHang == ma)
             {
                 cout << " Loading........" << endl;
             }
