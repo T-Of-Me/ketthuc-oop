@@ -21,13 +21,13 @@ public:
     HinhTron(double r) : banKinh(r) {}
 
     // Ghi đè phương thức "TinhDienTich"
-    double TinhDienTich() override
+    double TinhDienTich()
     {
         return 3.14 * banKinh * banKinh;
     }
 
     // Ghi đè phương thức "TinhChuVi"
-    double TinhChuVi() override
+    double TinhChuVi()
     {
         return 2 * 3.14 * banKinh;
     }

@@ -200,6 +200,7 @@ public:
         in >> x.NgayHetHan;
         in >> x.ThangHetHan;
         in >> x.NamHetHan;
+        
         in.ignore();
         getline(in, x.NhaCungCap);
         return in;

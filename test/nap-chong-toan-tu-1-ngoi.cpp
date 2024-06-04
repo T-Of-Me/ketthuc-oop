@@ -31,9 +31,9 @@ int main() {
 
     // Sử dụng toán tử ++
     cout << "Giá trị ban đầu: " << num.getValue() << endl;
-    MyNumber postIncrement = num++;
+    MyNumber  a = num++;
     cout << "Sau hậu tố ++: " << num.getValue() << endl;
-    cout << "Giá trị trả về từ hậu tố ++: " << postIncrement.getValue() << endl;
+    cout << "Giá trị trả về từ hậu tố ++: " << a.getValue() << endl;
 
     MyNumber preIncrement = ++num;
     cout << "Sau tiền tố ++: " << num.getValue() << endl;
