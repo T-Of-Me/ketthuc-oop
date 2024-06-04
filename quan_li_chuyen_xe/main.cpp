@@ -294,15 +294,12 @@ void NoiTinh()
     ofstream File1;
     ofstream File2;
     File1.open("ChuyenXe.txt", ios::app);
-    File2.open("DoanhThu.txt", ios::app);
     ChuyenXeNoiTinh x;
     CheckMaXeTonTai();
     cin >> x;
     File1 << "NOITINH" << endl;
     File1 << x;
-    File2 << x.TongDoanhThu() << endl;
     File1.close();
-    File2.close();
 }
 int check;
 //=========================================================
@@ -332,7 +329,7 @@ void DoanhThu()
     {
         tong += x;
     }
-    cout << "Tong doanh thu cua cong ty :" << tong << "$" << endl;
+    cout << "doanh thu chuyen xe ngoai tinh : " << tong << "$" << endl;
 }
 //==========================================================
 void TImKiemCHuyenXe(int ma)
