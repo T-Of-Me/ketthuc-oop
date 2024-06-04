@@ -3,10 +3,14 @@ using namespace std;
 
 class Base
 {
+private:
+    int a = 10;
+
 public:
     virtual void Display()
     {
         cout << "class Base" << endl;
+        cout << a << endl;
     }
 };
 
@@ -34,6 +38,3 @@ int main()
     Show(D);      // Derived::Display()
     return 0;
 }
-
-
-
