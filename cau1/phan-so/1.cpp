@@ -73,3 +73,5 @@ PS PS::operator+(int &songuyen)
     PS sohuuti(songuyen * ms, ms);
     return *this + sohuuti;
 }
+
+

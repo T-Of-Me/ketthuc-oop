@@ -16,7 +16,7 @@ public:
     sophuc operator*(sophuc &);
     sophuc operator/(sophuc &);
 
-    friend bool operator==(sophuc &, sophuc &);
+    bool operator==(sophuc &);
 
     friend ostream &operator<<(ostream &, sophuc &);
     friend istream &operator>>(istream &, sophuc &);
@@ -26,9 +26,9 @@ public:
         return sqrt(pt * pt + pa * pa);
     }
 };
-bool operator==(sophuc &a, sophuc &b)
+bool sophuc::operator==(sophuc &a)
 {
-    return (a.pa + a.pt == b.pt + b.pa);
+    return (a.pa + a.pt == pt + pa);
 }
 istream &operator>>(istream &in, sophuc &sp)
 {

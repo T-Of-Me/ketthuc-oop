@@ -12,21 +12,27 @@ class Time
     int second;
 
 public:
-    bool operator==(Time t);
-    bool operator<(Time t);
-    bool operator>(Time t);
+    Time operator+(int s);
+    int operator-(Time t);
 };
-bool Time::operator==(Time t)
+Time Time::operator+(int s)
 {
-    return ((second == t.second) && (minute == t.minute) && (hour == t.hour));
+    second = second + s;
+    while (second >= 60)
+    {
+        second = second - 60;
+        minute = minute + 1;
+    };
+    while (minute >= 60)
+    {
+        minute = minute - 60;
+        hour = hour + 1;
+    };
+    return *this;
 };
-bool Time::operator<(Time t)
+int Time::operator-(Time t)
 {
-    return ((hour * 3600 + minute * 60 + second) < (t.hour * 3600 + t.minute * 60 + t.second));
+    int h;
+    h = (hour * 3600 - minute * 60 + second) - (t.hour * 3600 - t.minute * 60 + t.second); 
+    return h;
 };
-bool Time::operator>(Time t)
-{
-    return ((hour * 3600 + minute * 60 + second) > (t.hour * 3600 + t.minute * 60 + t.second));
-};
-
-

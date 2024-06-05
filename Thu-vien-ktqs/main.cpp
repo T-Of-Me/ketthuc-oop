@@ -501,7 +501,7 @@ int main()
         cout << " 3  xap xep giao trinh theo ngay " << endl;
         cout << " 4  xap xep tham khao theo ngay " << endl;
         cout << " 5  xap xep giao trinh so luong " << endl;
-        cout << " 6  xap xep  tham khao  so luong " << endl;
+        cout << " 6  xap xep tham khao so luong " << endl;
         cout << " 7   " << endl;
         cout << " (^;_;^)  NHAP LUA CHON !!!!! (^;_;^) " << endl;
         cin >> check;

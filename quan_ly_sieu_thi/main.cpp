@@ -44,7 +44,6 @@ public:
         cout << "So luong ton kho :" << SoLuongTon << endl;
         cout << "Don gia :" << DonGia << endl;
     }
-
 };
 
 //====================================================================================================================================================
@@ -61,7 +60,7 @@ private:
     string NhaCungCap;
 
 public:
-    ThucPhamNhap(int ma, int soluong, int dongia, int ngays, int thangs, int nams, int ngayh, int thangh, int namh, string tenhang, string nhacungcap) 
+    ThucPhamNhap(int ma, int soluong, int dongia, int ngays, int thangs, int nams, int ngayh, int thangh, int namh, string tenhang, string nhacungcap)
     {
         this->MaHang = ma;
         this->SoLuongTon = soluong;
@@ -184,6 +183,7 @@ private:
     string NhaCungCap;
 
 public:
+    friend class QuanLy;
     friend void CapNhatThongTin();
     int TriTonKho()
     {
@@ -299,6 +299,7 @@ private:
     string ChungLoai;
 
 public:
+    friend class QuanLy;
     int TriTonKho()
     {
         return SoLuongTon * DonGia * (1 + 10 / 100);
@@ -444,6 +445,7 @@ private:
     int NamNhapKho;
 
 public:
+    friend class QuanLy;
     int TriTonKho()
     {
         return SoLuongTon * DonGia * (1 + 10 / 100);
@@ -555,450 +557,25 @@ int CheckMaHangHoaTonTai(int chose, int z, string ten)
         return 0;
     }
 }
-//=====================================================================================================================================================
-void ThemHangHoa()
+class QuanLy
 {
-    cout << "1 them thuc pham" << endl;
-    cout << "2 them dien may" << endl;
-    cout << "3 them may mac" << endl;
-    int chose;
-    int ma = 0;
-    cout << "nhap lua chon " << endl;
-    string ten;
-    cin >> chose;
-    if (chose == 1)
+private:
+public:
+    void CapNhatThongTinMayMac()
     {
-        cout << "Nhap ma va ten de kiem tra thuc pham " << endl;
-        do
-        {
-            cin >> ma;
-            cout << "ten :";
-            cin.ignore();
-            getline(cin, ten);
-        } while (CheckMaHangHoaTonTai(chose, ma, ten));
-        ThucPhamNhap a;
-        ofstream File("ThucPham.txt", ios::app);
-        cin >> a;
-        File << a;
-        File.close();
-    }
-    else if (chose == 2)
-    {
-        cout << "Nhap ma de kiem tra dien may " << endl;
-        do
-        {
-            cin >> ma;
-            cout << "ten :";
-            cin.ignore();
-            getline(cin, ten);
-        } while (CheckMaHangHoaTonTai(chose, ma, ten));
-        cout << "them dien may" << endl;
-        DienMay a;
-        ofstream File("DienMay.txt", ios::app);
-        cin >> a;
-        File << a;
-        File.close();
-    }
-    else if (chose == 3)
-    {
-        cout << "Nhap ma de kiem tra may mac" << endl;
-        do
-        {
-            cin >> ma;
-            cout << "ten :";
-            cin.ignore();
-            getline(cin, ten);
-        } while (CheckMaHangHoaTonTai(chose, ma, ten));
-        cout << "them may moc" << endl;
-        MayMac a;
-        ofstream File("MayMac.txt", ios::app);
-        cin >> a;
-        File << a;
-        File.close();
-    }
-    else
-    {
-        cout << " sai ki tu !!!!!!!!!" << endl;
-    }
-}
-//=====================================================================================================================================================
-
-void TimKiem()
-{
-    cout << "1 tim thuc pham" << endl;
-    cout << "2 tim dien may" << endl;
-    cout << "3 tim may mac" << endl;
-    int chose;
-    cout << "nhap lua chon :";
-    cin >> chose;
-    string ten;
-    int ma = 0;
-    if (chose == 1)
-    {
-        cout << "Nhap ma de kiem tra thuc pham " << endl;
-        do
-        {
-            cin >> ma;
-            cout << "ten :";
-            cin.ignore();
-            getline(cin, ten);
-        } while (!CheckMaHangHoaTonTai(chose, ma, ten));
-        ThucPham a;
-        ifstream File("ThucPham.txt", ios::in);
-        while (File >> a)
-        {
-            if (a.MaHang == ma && a.TenHang == ten)
-            {
-                a.print();
-                break;
-            }
-        }
-        File.close();
-    }
-    else if (chose == 2)
-    {
-        cout << "Nhap ma de kiem tra dien may " << endl;
-        do
-        {
-            cin >> ma;
-            cout << "ten :";
-            cin.ignore();
-            getline(cin, ten);
-        } while (!CheckMaHangHoaTonTai(chose, ma, ten));
-        DienMay a;
-        ifstream File("DienMay.txt", ios::in);
-        while (File >> a)
-        {
-            if (a.MaHang == ma && a.TenHang == ten)
-            {
-                a.print();
-                break;
-            }
-        }
-        File.close();
-    }
-    else if (chose == 3)
-    {
-        cout << "Nhap ma de kiem tra may mac " << endl;
-        do
-        {
-            cin >> ma;
-            cout << "ten :";
-            cin.ignore();
-            getline(cin, ten);
-        } while (!CheckMaHangHoaTonTai(chose, ma, ten));
-        MayMac a;
-        ifstream File("MayMac.txt", ios::in);
-        while (File >> a)
-        {
-            if (a.MaHang == ma && a.TenHang == ten)
-            {
-                a.print();
-                break;
-            }
-        }
-        File.close();
-    }
-    else
-    {
-        cout << "sai ki tu " << endl;
-    }
-}
-//=====================================================================================================================================================
-void CapNhatThongTinDienMay()
-{
-    int ma, soluong, dongia, thoigianbaohanh, congxuat;
-    char tenhang[100], chungloai[100];
-    string t;
-    bool checking = false;
-    do
-    {
-        cout << "nhap ma de tim san pham :";
-
-        cin >> ma;
-        cout << "nhap ten :";
-        cin.ignore();
-
-        getline(cin, t);
-        DienMay a;
-        ifstream File("DienMay.txt", ios::in);
-        while (File >> a)
-        {
-            if (a.MaHang == ma && a.TenHang == t)
-            {
-                cout << "da tim thay ma ....." << endl;
-                checking = true;
-            }
-        }
-        if (checking == false)
-        {
-            cout << "ma san pham khong ton tai " << endl;
-        }
-        File.close();
-
-    } while (checking == false);
-    DienMay a;
-    ifstream File1("DienMay.txt", ios::in);
-    ofstream File2("DienMayTemp.txt", ios::trunc);
-    while (File1 >> a)
-    {
-        if (a.MaHang == ma && a.TenHang == t)
-        {
-            cout << " Loading........" << endl;
-            soluong = a.SoLuongTon;
-            dongia = a.DonGia;
-            thoigianbaohanh = a.ThoiGianBaoHanh;
-            congxuat = a.CongXuat;
-            const char *t = a.TenHang.c_str();
-            strcpy(tenhang, t);
-            const char *k = a.ChungLoai.c_str();
-            strcpy(chungloai, k);
-        }
-        else
-        {
-            File2 << a;
-        }
-    }
-    File1.close();
-    File2.close();
-    ifstream File4("DienMayTemp.txt", ios::in);
-    ofstream File3("DienMay.txt", ios::trunc);
-    while (File4 >> a)
-    {
-        File3 << a;
-    }
-    File3.close();
-    File4.close();
-
-    // xoa doi tuong thanh cong
-    cout << "1 thay doi thoi gian bao hanh " << endl;
-    cout << "2 thay doi cong xuat" << endl;
-    cout << "3 thay doi chung loai" << endl;
-    cout << "4 thay doi luong ton" << endl;
-    cout << "5 thay doi don gia" << endl;
-    int check;
-    cin >> check;
-    if (check == 1)
-    {
-        int THOIGIANBAOHANH;
-        cout << "nhap thoi gian bao hanh thay the :";
-        cin >> THOIGIANBAOHANH;
-        DienMay x(ma, soluong, dongia, THOIGIANBAOHANH, congxuat, tenhang, chungloai);
-        ofstream File5("DienMay.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-    else if (check == 2)
-    {
-        int CONGXUAT;
-        cout << "nhap cong xuat thay the :";
-        cin >> CONGXUAT;
-        DienMay x(ma, soluong, dongia, thoigianbaohanh, CONGXUAT, tenhang, chungloai);
-        ofstream File5("DienMay.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-    else if (check == 3)
-    {
-        string CHUNGLOAI;
-        cout << "nhap chung loai  thay the :";
-        cin.ignore();
-        getline(cin, CHUNGLOAI);
-        DienMay x(ma, soluong, dongia, thoigianbaohanh, congxuat, tenhang, CHUNGLOAI);
-        ofstream File5("DienMay.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-    else if (check == 4)
-    {
-        cout << "nhap luong ton thay the:";
-        int LUONGTON;
-        cin >> LUONGTON;
-        DienMay x(ma, LUONGTON, dongia, thoigianbaohanh, congxuat, tenhang, chungloai);
-        ofstream File5("DienMay.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-    else if (check == 5)
-    {
-        cout << "nhap don gia thay the :";
-        int DONGIA;
-        cin >> DONGIA;
-        DienMay x(ma, soluong, DONGIA, thoigianbaohanh, congxuat, tenhang, chungloai);
-        ofstream File5("DienMay.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-    else
-    {
-        cout << "sai ki tu !!!!!!!!!!! " << endl;
-    }
-}
-//=====================================================================================================================================================
-void CapNhatThongTinMayMac()
-{
-    int ma, soluong, dongia, ngay, thang, nam;
-    char tenhang[100], tennhasanxuat[100];
-    string t;
-    bool checking = false;
-    do
-    {
-        cout << "nhap ma de tim san pham :";
-        cin >> ma;
-        cout << "nhap ten:";
-        cin.ignore();
-        getline(cin, t);
-        MayMac a;
-        ifstream File("MayMac.txt", ios::in);
-        while (File >> a)
-        {
-            if (a.MaHang == ma && a.TenHang == t)
-            {
-                cout << "da tim thay ma ....." << endl;
-                checking = true;
-            }
-        }
-        if (checking == false)
-        {
-            cout << "ma san pham khong ton tai " << endl;
-        }
-        File.close();
-    } while (checking == false);
-    MayMac a;
-    ifstream File1("MayMac.txt", ios::in);
-    ofstream File2("MayMacTemp.txt", ios::trunc);
-    while (File1 >> a)
-    {
-        if (a.MaHang == ma && a.TenHang == t)
-        {
-            cout << " Loading........" << endl;
-            soluong = a.SoLuongTon;
-            dongia = a.DonGia;
-            ngay = a.NgayNhapKho;
-            thang = a.ThangNhapKho;
-            nam = a.NamNhapKho;
-            const char *t = a.TenHang.c_str();
-            strcpy(tenhang, t);
-            const char *k = a.TenNhaSanXuat.c_str();
-            strcpy(tennhasanxuat, k);
-        }
-        else
-        {
-            File2 << a;
-        }
-    }
-    File1.close();
-    File2.close();
-    ifstream File4("MayMacTemp.txt", ios::in);
-    ofstream File3("MayMac.txt", ios::trunc);
-    while (File4 >> a)
-    {
-        File3 << a;
-    }
-    File3.close();
-    File4.close();
-    cout << "1 thay doi ngay nhap kho " << endl;
-    cout << "2 thay doi ten nha san xuat" << endl;
-    cout << "3 thay doi luong ton" << endl;
-    cout << "4 thay doi don gia" << endl;
-    int check;
-    cin >> check;
-    if (check == 1)
-    {
-        int NGAY, THANG, NAM;
-        cout << " nhap ngay :";
-        do
-        {
-            cin >> NGAY;
-            if (NGAY < 0 || NGAY > 31)
-            {
-                cout << " sai ki tu nhap lai " << endl;
-            }
-        } while (NGAY < 0 || NGAY > 31);
-        cout << " nhap thang :";
-        do
-        {
-            cin >> THANG;
-            if (THANG < 0 || THANG > 12)
-            {
-                cout << " sai ki tu nhap lai " << endl;
-            }
-        } while (THANG < 0 || THANG > 12);
-        cout << " nhap nam :";
-        do
-        {
-            cin >> NAM;
-            if (NAM > 2024)
-            {
-                cout << " sai ki tu nhap lai " << endl;
-            }
-
-        } while (NAM > 2024);
-        MayMac x(ma, soluong, dongia, NGAY, THANG, NAM, tenhang, tennhasanxuat);
-        ofstream File5("MayMac.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-    else if (check == 2)
-    {
-        cout << "nhap ten :";
-        string NHASANXUAT;
-        cin.ignore();
-        getline(cin, NHASANXUAT);
-        MayMac x(ma, soluong, dongia, ngay, thang, nam, tenhang, NHASANXUAT);
-        ofstream File5("MayMac.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-    else if (check == 3)
-    {
-
-        cout << "luong ton :";
-        int LUONGTON;
-        cin >> LUONGTON;
-        MayMac x(ma, LUONGTON, dongia, ngay, thang, nam, tenhang, tennhasanxuat);
-        ofstream File5("MayMac.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-    else if (check == 2)
-    {
-        cout << "don gia :";
-        int DONGIA;
-        cin >> DONGIA;
-        MayMac x(ma, soluong, DONGIA, ngay, thang, nam, tenhang, tennhasanxuat);
-        ofstream File5("MayMac.txt", ios::app);
-        File5 << x;
-        File5.close();
-    }
-}
-//=====================================================================================================================================================
-
-void CapNhatThongTin()
-{
-    cout << "1   thuc pham" << endl;
-    cout << "2   dien may" << endl;
-    cout << "3   may mac" << endl;
-    int chose;
-    cout << "nhap lua chon :";
-    cin >> chose;
-    if (chose == 1)
-    {
-        int ma;
-        int soluong, dongia, ngayh, thangh, namh, ngays, thangs, nams;
+        int ma, soluong, dongia, ngay, thang, nam;
+        char tenhang[100], tennhasanxuat[100];
         string t;
-        char tenhang[100], nhacungcap[100];
         bool checking = false;
         do
         {
             cout << "nhap ma de tim san pham :";
-
             cin >> ma;
-            cout << "nhap ten :";
+            cout << "nhap ten:";
             cin.ignore();
             getline(cin, t);
-            ThucPham a;
-            ifstream File("ThucPham.txt", ios::in);
+            MayMac a;
+            ifstream File("MayMac.txt", ios::in);
             while (File >> a)
             {
                 if (a.MaHang == ma && a.TenHang == t)
@@ -1012,12 +589,10 @@ void CapNhatThongTin()
                 cout << "ma san pham khong ton tai " << endl;
             }
             File.close();
-
         } while (checking == false);
-
-        ThucPham a;
-        ifstream File1("ThucPham.txt", ios::in);
-        ofstream File2("ThucPhamTemp.txt", ios::trunc);
+        MayMac a;
+        ifstream File1("MayMac.txt", ios::in);
+        ofstream File2("MayMacTemp.txt", ios::trunc);
         while (File1 >> a)
         {
             if (a.MaHang == ma && a.TenHang == t)
@@ -1025,16 +600,13 @@ void CapNhatThongTin()
                 cout << " Loading........" << endl;
                 soluong = a.SoLuongTon;
                 dongia = a.DonGia;
-                ngayh = a.NgayHetHan;
-                thangh = a.ThangHetHan;
-                namh = a.NamHetHan;
-                ngays = a.NgaySanXuat;
-                thangs = a.ThangSanXuat;
-                nams = a.NamSanXuat;
+                ngay = a.NgayNhapKho;
+                thang = a.ThangNhapKho;
+                nam = a.NamNhapKho;
                 const char *t = a.TenHang.c_str();
                 strcpy(tenhang, t);
-                const char *k = a.NhaCungCap.c_str();
-                strcpy(nhacungcap, k);
+                const char *k = a.TenNhaSanXuat.c_str();
+                strcpy(tennhasanxuat, k);
             }
             else
             {
@@ -1043,21 +615,18 @@ void CapNhatThongTin()
         }
         File1.close();
         File2.close();
-        ifstream File4("ThucPhamTemp.txt", ios::in);
-        ofstream File3("ThucPham.txt", ios::trunc);
+        ifstream File4("MayMacTemp.txt", ios::in);
+        ofstream File3("MayMac.txt", ios::trunc);
         while (File4 >> a)
         {
             File3 << a;
         }
         File3.close();
         File4.close();
-
-        // xoa doi tuong thanh cong
-        cout << "1 thay doi ngay san xuat " << endl;
-        cout << "2 thay doi ngay het han" << endl;
-        cout << "3 thay doi nha cung cap" << endl;
-        cout << "4 thay doi luong ton" << endl;
-        cout << "5 thay doi don gia" << endl;
+        cout << "1 thay doi ngay nhap kho " << endl;
+        cout << "2 thay doi ten nha san xuat" << endl;
+        cout << "3 thay doi luong ton" << endl;
+        cout << "4 thay doi don gia" << endl;
         int check;
         cin >> check;
         if (check == 1)
@@ -1091,172 +660,129 @@ void CapNhatThongTin()
                 }
 
             } while (NAM > 2024);
-            ThucPhamNhap x(ma, soluong, dongia, NGAY, THANG, NAM, ngayh, thangh, namh, tenhang, nhacungcap);
-            ofstream File5("ThucPham.txt", ios::app);
+            MayMac x(ma, soluong, dongia, NGAY, THANG, NAM, tenhang, tennhasanxuat);
+            ofstream File5("MayMac.txt", ios::app);
             File5 << x;
             File5.close();
         }
         else if (check == 2)
         {
-            int NGAY, THANG, NAM;
-            cout << " nhap ngay :";
-            do
-            {
-                cin >> NGAY;
-                if (NGAY < 0 || NGAY > 31)
-                {
-                    cout << " sai ki tu nhap lai " << endl;
-                }
-            } while (NGAY < 0 || NGAY > 31);
-            cout << " nhap thang :";
-            do
-            {
-                cin >> THANG;
-                if (THANG < 0 || THANG > 12)
-                {
-                    cout << " sai ki tu nhap lai " << endl;
-                }
-            } while (THANG < 0 || THANG > 12);
-            cout << " nhap nam :";
-            do
-            {
-                cin >> NAM;
-                if (NAM > 2024)
-                {
-                    cout << " sai ki tu nhap lai " << endl;
-                }
-
-            } while (NAM > 2024);
-            ThucPhamNhap x(ma, soluong, dongia, ngays, thangs, nams, NGAY, THANG, NAM, tenhang, nhacungcap);
-            ofstream File5("ThucPham.txt", ios::app);
+            cout << "nhap ten :";
+            string NHASANXUAT;
+            cin.ignore();
+            getline(cin, NHASANXUAT);
+            MayMac x(ma, soluong, dongia, ngay, thang, nam, tenhang, NHASANXUAT);
+            ofstream File5("MayMac.txt", ios::app);
             File5 << x;
             File5.close();
         }
         else if (check == 3)
         {
-            cout << "nhap ten nha cung cap thay the :";
-            string NHACUNGCAP;
-            cin.ignore();
-            getline(cin, NHACUNGCAP);
-            ThucPhamNhap x(ma, soluong, dongia, ngays, thangs, nams, ngayh, thangh, namh, tenhang, NHACUNGCAP);
-            ofstream File5("ThucPham.txt", ios::app);
-            File5 << x;
-            File5.close();
-        }
-        else if (check == 4)
-        {
-            cout << "nhap luong ton thay the:";
+
+            cout << "luong ton :";
             int LUONGTON;
             cin >> LUONGTON;
-            ThucPhamNhap x(ma, LUONGTON, dongia, ngays, thangs, nams, ngayh, thangh, namh, tenhang, nhacungcap);
-            ofstream File5("ThucPham.txt", ios::app);
+            MayMac x(ma, LUONGTON, dongia, ngay, thang, nam, tenhang, tennhasanxuat);
+            ofstream File5("MayMac.txt", ios::app);
             File5 << x;
             File5.close();
         }
-        else if (check == 5)
+        else if (check == 2)
         {
-            cout << "nhap don gia thay the :";
+            cout << "don gia :";
             int DONGIA;
             cin >> DONGIA;
-            ThucPhamNhap x(ma, soluong, DONGIA, ngays, thangs, nams, ngayh, thangh, namh, tenhang, nhacungcap);
-            ofstream File5("ThucPham.txt", ios::app);
+            MayMac x(ma, soluong, DONGIA, ngay, thang, nam, tenhang, tennhasanxuat);
+            ofstream File5("MayMac.txt", ios::app);
             File5 << x;
             File5.close();
+        }
+    }
+    void ThemHangHoa()
+    {
+        cout << "1 them thuc pham" << endl;
+        cout << "2 them dien may" << endl;
+        cout << "3 them may mac" << endl;
+        int chose;
+        int ma = 0;
+        cout << "nhap lua chon " << endl;
+        string ten;
+        cin >> chose;
+        if (chose == 1)
+        {
+            cout << "Nhap ma va ten de kiem tra thuc pham " << endl;
+            do
+            {
+                cin >> ma;
+                cout << "ten :";
+                cin.ignore();
+                getline(cin, ten);
+            } while (CheckMaHangHoaTonTai(chose, ma, ten));
+            ThucPhamNhap a;
+            ofstream File("ThucPham.txt", ios::app);
+            cin >> a;
+            File << a;
+            File.close();
+        }
+        else if (chose == 2)
+        {
+            cout << "Nhap ma de kiem tra dien may " << endl;
+            do
+            {
+                cin >> ma;
+                cout << "ten :";
+                cin.ignore();
+                getline(cin, ten);
+            } while (CheckMaHangHoaTonTai(chose, ma, ten));
+            cout << "them dien may" << endl;
+            DienMay a;
+            ofstream File("DienMay.txt", ios::app);
+            cin >> a;
+            File << a;
+            File.close();
+        }
+        else if (chose == 3)
+        {
+            cout << "Nhap ma de kiem tra may mac" << endl;
+            do
+            {
+                cin >> ma;
+                cout << "ten :";
+                cin.ignore();
+                getline(cin, ten);
+            } while (CheckMaHangHoaTonTai(chose, ma, ten));
+            cout << "them may moc" << endl;
+            MayMac a;
+            ofstream File("MayMac.txt", ios::app);
+            cin >> a;
+            File << a;
+            File.close();
         }
         else
         {
-            cout << "sai ki tu !!!!!!!!!!! " << endl;
+            cout << " sai ki tu !!!!!!!!!" << endl;
         }
     }
-    else if (chose == 2)
+    void CapNhatThongTinDienMay()
     {
-        CapNhatThongTinDienMay();
-    }
-    else if (chose == 3)
-    {
-        CapNhatThongTinMayMac();
-    }
-    else
-    {
-        cout << " sai ki tu " << endl;
-    }
-}
-
-//=====================================================================================================================================================
-void XoaHangHoa()
-{
-    cout << "1   thuc pham" << endl;
-    cout << "2   dien may" << endl;
-    cout << "3   may mac" << endl;
-    int chose;
-    cout << "nhap lua chon :";
-    cin >> chose;
-    if (chose == 1)
-    {
-        int ma;
+        int ma, soluong, dongia, thoigianbaohanh, congxuat;
+        char tenhang[100], chungloai[100];
+        string t;
         bool checking = false;
         do
         {
             cout << "nhap ma de tim san pham :";
 
             cin >> ma;
-            ThucPham a;
-            ifstream File("ThucPham.txt", ios::in);
-            while (File >> a)
-            {
-                if (a.MaHang == ma)
-                {
-                    cout << "da tim thay ma ....." << endl;
-                    checking = true;
-                }
-            }
-            if (checking == false)
-            {
-                cout << "ma san pham khong ton tai " << endl;
-            }
-            File.close();
+            cout << "nhap ten :";
+            cin.ignore();
 
-        } while (checking == false);
-
-        ThucPham a;
-        ifstream File1("ThucPham.txt", ios::in);
-        ofstream File2("ThucPhamTemp.txt", ios::trunc);
-        while (File1 >> a)
-        {
-            if (a.MaHang == ma)
-            {
-                cout << " Loading........" << endl;
-            }
-            else
-            {
-                File2 << a;
-            }
-        }
-        File1.close();
-        File2.close();
-        ifstream File4("ThucPhamTemp.txt", ios::in);
-        ofstream File3("ThucPham.txt", ios::trunc);
-        while (File4 >> a)
-        {
-            File3 << a;
-        }
-        File3.close();
-        File4.close();
-        cout << "da xoa ma " << ma << "cua thuc pham" << endl;
-    }
-    else if (chose == 2)
-    {
-        int ma;
-        bool checking = false;
-        do
-        {
-            cout << "nhap ma de tim san pham :";
-            cin >> ma;
-            MayMac a;
+            getline(cin, t);
+            DienMay a;
             ifstream File("DienMay.txt", ios::in);
             while (File >> a)
             {
-                if (a.MaHang == ma)
+                if (a.MaHang == ma && a.TenHang == t)
                 {
                     cout << "da tim thay ma ....." << endl;
                     checking = true;
@@ -1274,9 +800,17 @@ void XoaHangHoa()
         ofstream File2("DienMayTemp.txt", ios::trunc);
         while (File1 >> a)
         {
-            if (a.MaHang == ma)
+            if (a.MaHang == ma && a.TenHang == t)
             {
                 cout << " Loading........" << endl;
+                soluong = a.SoLuongTon;
+                dongia = a.DonGia;
+                thoigianbaohanh = a.ThoiGianBaoHanh;
+                congxuat = a.CongXuat;
+                const char *t = a.TenHang.c_str();
+                strcpy(tenhang, t);
+                const char *k = a.ChungLoai.c_str();
+                strcpy(chungloai, k);
             }
             else
             {
@@ -1285,7 +819,7 @@ void XoaHangHoa()
         }
         File1.close();
         File2.close();
-        ifstream File4("DienMayTemp .txt", ios::in);
+        ifstream File4("DienMayTemp.txt", ios::in);
         ofstream File3("DienMay.txt", ios::trunc);
         while (File4 >> a)
         {
@@ -1293,141 +827,618 @@ void XoaHangHoa()
         }
         File3.close();
         File4.close();
-        cout << "da xoa " << endl;
-    }
-    else if (chose == 3)
-    {
-        int ma;
-        bool checking = false;
-        do
+
+        // xoa doi tuong thanh cong
+        cout << "1 thay doi thoi gian bao hanh " << endl;
+        cout << "2 thay doi cong xuat" << endl;
+        cout << "3 thay doi chung loai" << endl;
+        cout << "4 thay doi luong ton" << endl;
+        cout << "5 thay doi don gia" << endl;
+        int check;
+        cin >> check;
+        if (check == 1)
         {
-            cout << "nhap ma de tim san pham :";
-            cin >> ma;
+            int THOIGIANBAOHANH;
+            cout << "nhap thoi gian bao hanh thay the :";
+            cin >> THOIGIANBAOHANH;
+            DienMay x(ma, soluong, dongia, THOIGIANBAOHANH, congxuat, tenhang, chungloai);
+            ofstream File5("DienMay.txt", ios::app);
+            File5 << x;
+            File5.close();
+        }
+        else if (check == 2)
+        {
+            int CONGXUAT;
+            cout << "nhap cong xuat thay the :";
+            cin >> CONGXUAT;
+            DienMay x(ma, soluong, dongia, thoigianbaohanh, CONGXUAT, tenhang, chungloai);
+            ofstream File5("DienMay.txt", ios::app);
+            File5 << x;
+            File5.close();
+        }
+        else if (check == 3)
+        {
+            string CHUNGLOAI;
+            cout << "nhap chung loai  thay the :";
+            cin.ignore();
+            getline(cin, CHUNGLOAI);
+            DienMay x(ma, soluong, dongia, thoigianbaohanh, congxuat, tenhang, CHUNGLOAI);
+            ofstream File5("DienMay.txt", ios::app);
+            File5 << x;
+            File5.close();
+        }
+        else if (check == 4)
+        {
+            cout << "nhap luong ton thay the:";
+            int LUONGTON;
+            cin >> LUONGTON;
+            DienMay x(ma, LUONGTON, dongia, thoigianbaohanh, congxuat, tenhang, chungloai);
+            ofstream File5("DienMay.txt", ios::app);
+            File5 << x;
+            File5.close();
+        }
+        else if (check == 5)
+        {
+            cout << "nhap don gia thay the :";
+            int DONGIA;
+            cin >> DONGIA;
+            DienMay x(ma, soluong, DONGIA, thoigianbaohanh, congxuat, tenhang, chungloai);
+            ofstream File5("DienMay.txt", ios::app);
+            File5 << x;
+            File5.close();
+        }
+        else
+        {
+            cout << "sai ki tu !!!!!!!!!!! " << endl;
+        }
+    }
+    void CapNhatThongTin()
+    {
+        cout << "1   thuc pham" << endl;
+        cout << "2   dien may" << endl;
+        cout << "3   may mac" << endl;
+        int chose;
+        cout << "nhap lua chon :";
+        cin >> chose;
+        if (chose == 1)
+        {
+            int ma;
+            int soluong, dongia, ngayh, thangh, namh, ngays, thangs, nams;
+            string t;
+            char tenhang[100], nhacungcap[100];
+            bool checking = false;
+            do
+            {
+                cout << "nhap ma de tim san pham :";
+
+                cin >> ma;
+                cout << "nhap ten :";
+                cin.ignore();
+                getline(cin, t);
+                ThucPham a;
+                ifstream File("ThucPham.txt", ios::in);
+                while (File >> a)
+                {
+                    if (a.MaHang == ma && a.TenHang == t)
+                    {
+                        cout << "da tim thay ma ....." << endl;
+                        checking = true;
+                    }
+                }
+                if (checking == false)
+                {
+                    cout << "ma san pham khong ton tai " << endl;
+                }
+                File.close();
+
+            } while (checking == false);
+
+            ThucPham a;
+            ifstream File1("ThucPham.txt", ios::in);
+            ofstream File2("ThucPhamTemp.txt", ios::trunc);
+            while (File1 >> a)
+            {
+                if (a.MaHang == ma && a.TenHang == t)
+                {
+                    cout << " Loading........" << endl;
+                    soluong = a.SoLuongTon;
+                    dongia = a.DonGia;
+                    ngayh = a.NgayHetHan;
+                    thangh = a.ThangHetHan;
+                    namh = a.NamHetHan;
+                    ngays = a.NgaySanXuat;
+                    thangs = a.ThangSanXuat;
+                    nams = a.NamSanXuat;
+                    const char *t = a.TenHang.c_str();
+                    strcpy(tenhang, t);
+                    const char *k = a.NhaCungCap.c_str();
+                    strcpy(nhacungcap, k);
+                }
+                else
+                {
+                    File2 << a;
+                }
+            }
+            File1.close();
+            File2.close();
+            ifstream File4("ThucPhamTemp.txt", ios::in);
+            ofstream File3("ThucPham.txt", ios::trunc);
+            while (File4 >> a)
+            {
+                File3 << a;
+            }
+            File3.close();
+            File4.close();
+
+            // xoa doi tuong thanh cong
+            cout << "1 thay doi ngay san xuat " << endl;
+            cout << "2 thay doi ngay het han" << endl;
+            cout << "3 thay doi nha cung cap" << endl;
+            cout << "4 thay doi luong ton" << endl;
+            cout << "5 thay doi don gia" << endl;
+            int check;
+            cin >> check;
+            if (check == 1)
+            {
+                int NGAY, THANG, NAM;
+                cout << " nhap ngay :";
+                do
+                {
+                    cin >> NGAY;
+                    if (NGAY < 0 || NGAY > 31)
+                    {
+                        cout << " sai ki tu nhap lai " << endl;
+                    }
+                } while (NGAY < 0 || NGAY > 31);
+                cout << " nhap thang :";
+                do
+                {
+                    cin >> THANG;
+                    if (THANG < 0 || THANG > 12)
+                    {
+                        cout << " sai ki tu nhap lai " << endl;
+                    }
+                } while (THANG < 0 || THANG > 12);
+                cout << " nhap nam :";
+                do
+                {
+                    cin >> NAM;
+                    if (NAM > 2024)
+                    {
+                        cout << " sai ki tu nhap lai " << endl;
+                    }
+
+                } while (NAM > 2024);
+                ThucPhamNhap x(ma, soluong, dongia, NGAY, THANG, NAM, ngayh, thangh, namh, tenhang, nhacungcap);
+                ofstream File5("ThucPham.txt", ios::app);
+                File5 << x;
+                File5.close();
+            }
+            else if (check == 2)
+            {
+                int NGAY, THANG, NAM;
+                cout << " nhap ngay :";
+                do
+                {
+                    cin >> NGAY;
+                    if (NGAY < 0 || NGAY > 31)
+                    {
+                        cout << " sai ki tu nhap lai " << endl;
+                    }
+                } while (NGAY < 0 || NGAY > 31);
+                cout << " nhap thang :";
+                do
+                {
+                    cin >> THANG;
+                    if (THANG < 0 || THANG > 12)
+                    {
+                        cout << " sai ki tu nhap lai " << endl;
+                    }
+                } while (THANG < 0 || THANG > 12);
+                cout << " nhap nam :";
+                do
+                {
+                    cin >> NAM;
+                    if (NAM > 2024)
+                    {
+                        cout << " sai ki tu nhap lai " << endl;
+                    }
+
+                } while (NAM > 2024);
+                ThucPhamNhap x(ma, soluong, dongia, ngays, thangs, nams, NGAY, THANG, NAM, tenhang, nhacungcap);
+                ofstream File5("ThucPham.txt", ios::app);
+                File5 << x;
+                File5.close();
+            }
+            else if (check == 3)
+            {
+                cout << "nhap ten nha cung cap thay the :";
+                string NHACUNGCAP;
+                cin.ignore();
+                getline(cin, NHACUNGCAP);
+                ThucPhamNhap x(ma, soluong, dongia, ngays, thangs, nams, ngayh, thangh, namh, tenhang, NHACUNGCAP);
+                ofstream File5("ThucPham.txt", ios::app);
+                File5 << x;
+                File5.close();
+            }
+            else if (check == 4)
+            {
+                cout << "nhap luong ton thay the:";
+                int LUONGTON;
+                cin >> LUONGTON;
+                ThucPhamNhap x(ma, LUONGTON, dongia, ngays, thangs, nams, ngayh, thangh, namh, tenhang, nhacungcap);
+                ofstream File5("ThucPham.txt", ios::app);
+                File5 << x;
+                File5.close();
+            }
+            else if (check == 5)
+            {
+                cout << "nhap don gia thay the :";
+                int DONGIA;
+                cin >> DONGIA;
+                ThucPhamNhap x(ma, soluong, DONGIA, ngays, thangs, nams, ngayh, thangh, namh, tenhang, nhacungcap);
+                ofstream File5("ThucPham.txt", ios::app);
+                File5 << x;
+                File5.close();
+            }
+            else
+            {
+                cout << "sai ki tu !!!!!!!!!!! " << endl;
+            }
+        }
+        else if (chose == 2)
+        {
+            CapNhatThongTinDienMay();
+        }
+        else if (chose == 3)
+        {
+            CapNhatThongTinMayMac();
+        }
+        else
+        {
+            cout << " sai ki tu " << endl;
+        }
+    }
+
+    //=====================================================================================================================================================
+
+    //=====================================================================================================================================================
+
+    void TimKiem()
+    {
+        cout << "1 tim thuc pham" << endl;
+        cout << "2 tim dien may" << endl;
+        cout << "3 tim may mac" << endl;
+        int chose;
+        cout << "nhap lua chon :";
+        cin >> chose;
+        string ten;
+        int ma = 0;
+        if (chose == 1)
+        {
+            cout << "Nhap ma de kiem tra thuc pham " << endl;
+            do
+            {
+                cin >> ma;
+                cout << "ten :";
+                cin.ignore();
+                getline(cin, ten);
+            } while (!CheckMaHangHoaTonTai(chose, ma, ten));
+            ThucPham a;
+            ifstream File("ThucPham.txt", ios::in);
+            while (File >> a)
+            {
+                if (a.MaHang == ma && a.TenHang == ten)
+                {
+                    a.print();
+                    break;
+                }
+            }
+            File.close();
+        }
+        else if (chose == 2)
+        {
+            cout << "Nhap ma de kiem tra dien may " << endl;
+            do
+            {
+                cin >> ma;
+                cout << "ten :";
+                cin.ignore();
+                getline(cin, ten);
+            } while (!CheckMaHangHoaTonTai(chose, ma, ten));
+            DienMay a;
+            ifstream File("DienMay.txt", ios::in);
+            while (File >> a)
+            {
+                if (a.MaHang == ma && a.TenHang == ten)
+                {
+                    a.print();
+                    break;
+                }
+            }
+            File.close();
+        }
+        else if (chose == 3)
+        {
+            cout << "Nhap ma de kiem tra may mac " << endl;
+            do
+            {
+                cin >> ma;
+                cout << "ten :";
+                cin.ignore();
+                getline(cin, ten);
+            } while (!CheckMaHangHoaTonTai(chose, ma, ten));
             MayMac a;
             ifstream File("MayMac.txt", ios::in);
             while (File >> a)
             {
-                if (a.MaHang == ma)
+                if (a.MaHang == ma && a.TenHang == ten)
                 {
-                    cout << "da tim thay ma ....." << endl;
-                    checking = true;
+                    a.print();
+                    break;
                 }
             }
-            if (checking == false)
-            {
-                cout << "ma san pham khong ton tai " << endl;
-            }
             File.close();
-        } while (checking == false);
-        MayMac a;
-        ifstream File1("MayMac.txt", ios::in);
-        ofstream File2("MayMacTemp.txt", ios::trunc);
-        while (File1 >> a)
-        {
-            if (a.MaHang == ma)
-            {
-                cout << " Loading........" << endl;
-            }
-            else
-            {
-                File2 << a;
-            }
         }
-        File1.close();
-        File2.close();
-        ifstream File4("MayMacTemp.txt", ios::in);
-        ofstream File3("MayMac.txt", ios::trunc);
-        while (File4 >> a)
+        else
         {
-            File3 << a;
+            cout << "sai ki tu " << endl;
         }
-        File3.close();
-        File4.close();
-        cout << "da xoa " << endl;
     }
-    else
-    {
-        cout << " ki tu sai !!!!" << endl;
-    }
-}
-//=====================================================================================================================================================
-void MaxThucPham()
-{
-    ThucPham b;
-    ThucPham a[50];
-    int i = 0;
-    ifstream file("ThucPham.txt", ios::in);
-    while (file >> a[i])
-    {
-        i++;
-    }
-    int m = i;
-    file.close();
-    b = sort(a, m);
-    b.print();
-}
-//=====================================================================================================================================================
+    //=====================================================================================================================================================
 
-//=====================================================================================================================================================
-void MacDienMay()
-{
-    DienMay b;
-    DienMay a[50];
-    int i = 0;
-    ifstream file("DienMay.txt", ios::in);
-    while (file >> a[i])
+    //=====================================================================================================================================================
+
+    //=====================================================================================================================================================
+
+    //=====================================================================================================================================================
+    void XoaHangHoa()
     {
-        i++;
+        cout << "1   thuc pham" << endl;
+        cout << "2   dien may" << endl;
+        cout << "3   may mac" << endl;
+        int chose;
+        cout << "nhap lua chon :";
+        cin >> chose;
+        if (chose == 1)
+        {
+            int ma;
+            bool checking = false;
+            do
+            {
+                cout << "nhap ma de tim san pham :";
+
+                cin >> ma;
+                ThucPham a;
+                ifstream File("ThucPham.txt", ios::in);
+                while (File >> a)
+                {
+                    if (a.MaHang == ma)
+                    {
+                        cout << "da tim thay ma ....." << endl;
+                        checking = true;
+                    }
+                }
+                if (checking == false)
+                {
+                    cout << "ma san pham khong ton tai " << endl;
+                }
+                File.close();
+
+            } while (checking == false);
+
+            ThucPham a;
+            ifstream File1("ThucPham.txt", ios::in);
+            ofstream File2("ThucPhamTemp.txt", ios::trunc);
+            while (File1 >> a)
+            {
+                if (a.MaHang == ma)
+                {
+                    cout << " Loading........" << endl;
+                }
+                else
+                {
+                    File2 << a;
+                }
+            }
+            File1.close();
+            File2.close();
+            ifstream File4("ThucPhamTemp.txt", ios::in);
+            ofstream File3("ThucPham.txt", ios::trunc);
+            while (File4 >> a)
+            {
+                File3 << a;
+            }
+            File3.close();
+            File4.close();
+            cout << "da xoa ma " << ma << "cua thuc pham" << endl;
+        }
+        else if (chose == 2)
+        {
+            int ma;
+            bool checking = false;
+            do
+            {
+                cout << "nhap ma de tim san pham :";
+                cin >> ma;
+                MayMac a;
+                ifstream File("DienMay.txt", ios::in);
+                while (File >> a)
+                {
+                    if (a.MaHang == ma)
+                    {
+                        cout << "da tim thay ma ....." << endl;
+                        checking = true;
+                    }
+                }
+                if (checking == false)
+                {
+                    cout << "ma san pham khong ton tai " << endl;
+                }
+                File.close();
+
+            } while (checking == false);
+            DienMay a;
+            ifstream File1("DienMay.txt", ios::in);
+            ofstream File2("DienMayTemp.txt", ios::trunc);
+            while (File1 >> a)
+            {
+                if (a.MaHang == ma)
+                {
+                    cout << " Loading........" << endl;
+                }
+                else
+                {
+                    File2 << a;
+                }
+            }
+            File1.close();
+            File2.close();
+            ifstream File4("DienMayTemp .txt", ios::in);
+            ofstream File3("DienMay.txt", ios::trunc);
+            while (File4 >> a)
+            {
+                File3 << a;
+            }
+            File3.close();
+            File4.close();
+            cout << "da xoa " << endl;
+        }
+        else if (chose == 3)
+        {
+            int ma;
+            bool checking = false;
+            do
+            {
+                cout << "nhap ma de tim san pham :";
+                cin >> ma;
+                MayMac a;
+                ifstream File("MayMac.txt", ios::in);
+                while (File >> a)
+                {
+                    if (a.MaHang == ma)
+                    {
+                        cout << "da tim thay ma ....." << endl;
+                        checking = true;
+                    }
+                }
+                if (checking == false)
+                {
+                    cout << "ma san pham khong ton tai " << endl;
+                }
+                File.close();
+            } while (checking == false);
+            MayMac a;
+            ifstream File1("MayMac.txt", ios::in);
+            ofstream File2("MayMacTemp.txt", ios::trunc);
+            while (File1 >> a)
+            {
+                if (a.MaHang == ma)
+                {
+                    cout << " Loading........" << endl;
+                }
+                else
+                {
+                    File2 << a;
+                }
+            }
+            File1.close();
+            File2.close();
+            ifstream File4("MayMacTemp.txt", ios::in);
+            ofstream File3("MayMac.txt", ios::trunc);
+            while (File4 >> a)
+            {
+                File3 << a;
+            }
+            File3.close();
+            File4.close();
+            cout << "da xoa " << endl;
+        }
+        else
+        {
+            cout << " ki tu sai !!!!" << endl;
+        }
     }
-    int m = i;
-    file.close();
-    cout << "mat hang co gia tri ton kho lon nhat :" << endl;
-    b = sort(a, m);
-    b.print();
-};
-void MaxMayMac()
-{
-    MayMac b;
-    MayMac a[50];
-    int i = 0;
-    ifstream file("MayMac.txt", ios::in);
-    while (file >> a[i])
+    //=====================================================================================================================================================
+    void MaxThucPham()
     {
-        i++;
+        ThucPham b;
+        ThucPham a[50];
+        int i = 0;
+        ifstream file("ThucPham.txt", ios::in);
+        while (file >> a[i])
+        {
+            i++;
+        }
+        int m = i;
+        file.close();
+        b = sort(a, m);
+        b.print();
     }
-    int m = i;
-    file.close();
-    cout << "mat hang co gia tri ton kho lon nhat :" << endl;
-    b = sort(a, m);
-    b.print();
+    //=====================================================================================================================================================
+
+    //=====================================================================================================================================================
+    void MacDienMay()
+    {
+        DienMay b;
+        DienMay a[50];
+        int i = 0;
+        ifstream file("DienMay.txt", ios::in);
+        while (file >> a[i])
+        {
+            i++;
+        }
+        int m = i;
+        file.close();
+        cout << "mat hang co gia tri ton kho lon nhat :" << endl;
+        b = sort(a, m);
+        b.print();
+    };
+    void MaxMayMac()
+    {
+        MayMac b;
+        MayMac a[50];
+        int i = 0;
+        ifstream file("MayMac.txt", ios::in);
+        while (file >> a[i])
+        {
+            i++;
+        }
+        int m = i;
+        file.close();
+        cout << "mat hang co gia tri ton kho lon nhat :" << endl;
+        b = sort(a, m);
+        b.print();
+    };
 };
 int check;
 //=====================================================================================================================================================
 
 void menu()
 {
+    QuanLy a;
     switch (check)
     {
     case 1:
-        ThemHangHoa();
+        a.ThemHangHoa();
         break;
     case 2:
-        TimKiem();
+        a.TimKiem();
         break;
     case 3:
-        CapNhatThongTin();
+        a.CapNhatThongTin();
         break;
     case 4:
-        XoaHangHoa();
+        a.XoaHangHoa();
         break;
     case 5:
-        MaxThucPham();
+        a.MaxThucPham();
         break;
     case 6:
-        MacDienMay();
+        a.MacDienMay();
         break;
     case 7:
-        MaxMayMac();
+        a.MaxMayMac();
         break;
     }
 }
