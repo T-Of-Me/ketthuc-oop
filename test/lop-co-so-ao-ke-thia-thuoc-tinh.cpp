@@ -3,6 +3,7 @@ using namespace std;
 
 class A
 {
+
 public:
     int a = 1;
 };
@@ -23,4 +24,3 @@ int main()
     D h;
     cout << h.a << endl;
 }
- 

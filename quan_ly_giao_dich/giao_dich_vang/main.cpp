@@ -17,7 +17,7 @@ protected:
 public:
     GiaoDich(){};
     ~GiaoDich(){};
-    virtual void print()
+    void print()
     {
         cout << "Ma giao dich :" << MaGiaoDich << endl;
         cout << "Ngay :" << ngay << "/" << thang << "/" << nam << endl;
@@ -52,13 +52,13 @@ public:
 
 //=================================================================
 
-class GiaoDichVang : public GiaoDich
+class GiaoDichVangNhap : public GiaoDich
 {
 private:
     string LoaiVang;
 
 public:
-    friend ostream &operator<<(ostream &out, GiaoDichVang x)
+    friend ostream &operator<<(ostream &out, GiaoDichVangNhap x)
     {
         out << x.MaGiaoDich << endl;
         out << x.ngay << endl;
@@ -69,7 +69,7 @@ public:
         out << x.LoaiVang << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, GiaoDichVang &x)
+    friend istream &operator>>(istream &in, GiaoDichVangNhap &x)
     {
         cout << " nhap ma giao dich :";
         in >> x.MaGiaoDich;
@@ -111,8 +111,8 @@ public:
         getline(in, x.LoaiVang);
         return in;
     }
-    GiaoDichVang(){};
-    ~GiaoDichVang(){};
+    GiaoDichVangNhap(){};
+    ~GiaoDichVangNhap(){};
     int ReturnTriGia()
     {
         return SoLuong * DonGia;
@@ -120,7 +120,7 @@ public:
 };
 //=================================================================
 
-class GiaoDichVangDoc : public GiaoDich
+class GiaoDichVang : virtual public GiaoDich
 {
 private:
     string LoaiVang;
@@ -130,13 +130,13 @@ public:
     {
         return LoaiVang;
     }
-    GiaoDichVangDoc(){};
-    ~GiaoDichVangDoc(){};
+    GiaoDichVang(){};
+    ~GiaoDichVang(){};
     int ReturnTriGia()
     {
         return SoLuong * DonGia;
     }
-    GiaoDichVangDoc(int ma, int ngay, int thang, int nam, int dongia, int soluong, string loai)
+    GiaoDichVang(int ma, int ngay, int thang, int nam, int dongia, int soluong, string loai)
     {
         this->MaGiaoDich = ma;
         this->ngay = ngay;
@@ -146,7 +146,7 @@ public:
         this->SoLuong = soluong;
         this->LoaiVang = loai;
     }
-    friend ostream &operator<<(ostream &out, GiaoDichVangDoc x)
+    friend ostream &operator<<(ostream &out, GiaoDichVang x)
     {
         out << x.MaGiaoDich << endl;
         out << x.ngay << endl;
@@ -157,7 +157,7 @@ public:
         out << x.LoaiVang << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, GiaoDichVangDoc &x)
+    friend istream &operator>>(istream &in, GiaoDichVang &x)
     {
         in >> x.MaGiaoDich;
         in >> x.ngay;
@@ -178,14 +178,14 @@ public:
 
 //===============================================================================================================
 
-class GiaoDichTien : public GiaoDich
+class GiaoDichTienNhap : public GiaoDich
 {
 private:
     int TyGia;
     string LoaiTienTe;
 
 public:
-    friend ostream &operator<<(ostream &out, GiaoDichTien x)
+    friend ostream &operator<<(ostream &out, GiaoDichTienNhap x)
     {
         out << x.MaGiaoDich << endl;
         out << x.ngay << endl;
@@ -197,7 +197,7 @@ public:
         out << x.LoaiTienTe << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, GiaoDichTien &x)
+    friend istream &operator>>(istream &in, GiaoDichTienNhap &x)
     {
         cout << " nhap ma giao dich :";
         in >> x.MaGiaoDich;
@@ -241,22 +241,22 @@ public:
         getline(in, x.LoaiTienTe);
         return in;
     }
-    GiaoDichTien(){};
-    ~GiaoDichTien(){};
+    GiaoDichTienNhap(){};
+    ~GiaoDichTienNhap(){};
     int ReturnTriGia()
     {
         return SoLuong * DonGia * TyGia;
     }
 };
 //================================================================================================================
-class GiaoDichTienDoc : public GiaoDich
+class GiaoDichTien : virtual public GiaoDich
 {
 private:
     int TyGia;
     string LoaiTienTe;
 
 public:
-    GiaoDichTienDoc(int ma, int ngay, int thang, int nam, int dongia, int soluong, int tygia, string loai)
+    GiaoDichTien(int ma, int ngay, int thang, int nam, int dongia, int soluong, int tygia, string loai)
     {
         this->MaGiaoDich = ma;
         this->ngay = ngay;
@@ -267,9 +267,9 @@ public:
         this->LoaiTienTe = loai;
         this->TyGia = tygia;
     }
-    GiaoDichTienDoc(){};
-    ~GiaoDichTienDoc(){};
-    friend ostream &operator<<(ostream &out, GiaoDichTienDoc x)
+    GiaoDichTien(){};
+    ~GiaoDichTien(){};
+    friend ostream &operator<<(ostream &out, GiaoDichTien x)
     {
         out << x.MaGiaoDich << endl;
         out << x.ngay << endl;
@@ -281,7 +281,7 @@ public:
         out << x.LoaiTienTe << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, GiaoDichTienDoc &x)
+    friend istream &operator>>(istream &in, GiaoDichTien &x)
     {
         in >> x.MaGiaoDich;
         in >> x.ngay;
@@ -312,437 +312,569 @@ public:
         cout << "loai tien :" << LoaiTienTe << endl;
     }
 };
+
 //================================================================================================================
-void ThemGiaoDich()
+class DanhSachGiaoDich : public GiaoDichTien
 {
-    cout << " vang: them giao dich vang " << endl;
-    cout << " tien: them giao dich tien " << endl;
-    string chose;
-    cin.ignore();
-    do
+private:
+public:
+    void ChinhSuaGiaoDichVang()
     {
-        getline(cin, chose);
-        if (chose != "vang" && chose != "tien")
+        cout << " nhap ma de thay doi thong tin giao dich" << endl;
+        int i = 0;
+        GiaoDichVang a[100];
+        int ma, ngay, thang, nam, dongia, soluong, trigia;
+        bool check = false;
+        string LoaiVang;
+        do
         {
-            cout << "sai ki tu nhap lai !!!!!" << endl;
+
+            cin >> ma;
+            ifstream File1("Vang.txt", ios::in);
+            while (File1 >> a[i])
+            {
+                if (a[i].ReturnMa() == ma)
+                {
+                    ngay = a[i].ReturnNgay();
+                    thang = a[i].ReturnThang();
+                    nam = a[i].ReturnNam();
+                    dongia = a[i].ReturnDonGia();
+                    soluong = a[i].ReturnSoLuong();
+                    LoaiVang = a[i].ReturnLoaivang();
+                    trigia = a[i].ReturnTriGia();
+                    check = true;
+                    i--;
+                }
+                i++;
+            }
+            File1.close();
+            if (check == false)
+            {
+                cout << " ma sai " << endl;
+            }
+        } while (check == false);
+        int count = i;
+        ofstream File2("Vang.txt", ios::trunc);
+        for (int i = 0; i < count; i++)
+        {
+            File2 << a[i];
         }
-    } while (chose != "vang" && chose != "tien");
-    if (chose == "vang")
-    {
-        ofstream File1("Vang.txt", ios::app);
-        ofstream File2("TrungBinhThuNhapVang.txt", ios::app);
-        GiaoDichVang a;
-        cin >> a;
-        File1 << a;
-        File2 << a.ReturnTriGia() << endl;
         File2.close();
-        File1.close();
+        // xoa doi tuong can sua ////////////////////////////////////==///////////////////////////////////////////////////////////////////////////
+        cout << "1 chinh sua ngay thang nam " << endl;
+        cout << "2 chinh sua don gia " << endl;
+        cout << "3 chinh sua so luong " << endl;
+        cout << "4 chinh sua loai vang  " << endl;
+        int chose;
+        cin >> chose;
+        if (chose == 1)
+        {
+            int NGAY, THANG, NAM;
+            cout << " nhap ngay :";
+            do
+            {
+                cin >> NGAY;
+                if (NGAY < 0 || NGAY > 31)
+                {
+                    cout << " ki tu khong hop ly" << endl;
+                }
+            } while (NGAY < 0 || NGAY > 31);
+            cout << " nhap thang :";
+            do
+            {
+                cin >> THANG;
+                if (THANG < 0 || THANG > 12)
+                {
+                    cout << " ki tu khong hop ly" << endl;
+                }
+            } while (THANG < 0 || THANG > 12);
+            cout << " nhap nam :";
+            do
+            {
+                cin >> NAM;
+                if (NAM > 2024)
+                {
+                    cout << " ki tu khong hop ly " << endl;
+                }
+
+            } while (NAM > 2024);
+            GiaoDichVang x(ma, NGAY, THANG, NAM, dongia, soluong, LoaiVang);
+            ofstream File1("Vang.txt", ios::app);
+            File1 << x;
+            File1.close();
+        }
+        else if (chose == 2)
+        {
+            ifstream File3("TrungBinhThuNhapVang.txt", ios::in);
+            int TriGia[100];
+            int j = 0;
+            while (File3 >> TriGia[j])
+            {
+                if (trigia == TriGia[j])
+                {
+                    j--;
+                }
+                j++;
+            }
+            File3.close();
+            int count = j;
+            ofstream File4("TrungBinhThuNhapVang.txt", ios::trunc);
+            for (int i = 0; i < count; i++)
+            {
+                File4 << TriGia[i] << endl;
+            }
+            File4.close();
+
+            // xoa tri gia
+            cout << "Nhap don gia thay doi :";
+            int DONGIA;
+            cin >> DONGIA;
+            GiaoDichVang x(ma, ngay, thang, nam, DONGIA, soluong, LoaiVang);
+            ofstream File1("Vang.txt", ios::app);
+            File1 << x;
+            File1.close();
+            ofstream File2("TrungBinhThuNhapVang.txt", ios::app);
+            File2 << x.ReturnTriGia() << endl;
+            File2.close();
+        }
+        else if (chose == 3)
+        {
+            ifstream File3("TrungBinhThuNhapVang.txt", ios::in);
+            int TriGia[100];
+            int j = 0;
+            while (File3 >> TriGia[j])
+            {
+                if (trigia == TriGia[j])
+                {
+                    j--;
+                }
+                j++;
+            }
+            File3.close();
+            int count = j;
+            ofstream File4("TrungBinhThuNhapVang.txt", ios::trunc);
+            for (int i = 0; i < count; i++)
+            {
+                File4 << TriGia[i] << endl;
+            }
+            File4.close();
+
+            // xoa tri gia
+            cout << "nhap so luong de thay doi :" << endl;
+            int SOLUONG;
+            cin >> SOLUONG;
+            GiaoDichVang x(ma, ngay, thang, nam, dongia, SOLUONG, LoaiVang);
+            ofstream File1("Vang.txt", ios::app);
+            File1 << x;
+            File1.close();
+            ofstream File2("TrungBinhThuNhapVang.txt", ios::app);
+            File2 << x.ReturnTriGia() << endl;
+            File2.close();
+        }
+        else if (chose == 4)
+        {
+            cout << "nhap loai vang de thay doi :" << endl;
+            string LOAIVANG;
+            cin.ignore();
+            getline(cin, LOAIVANG);
+            GiaoDichVang x(ma, ngay, thang, nam, dongia, soluong, LOAIVANG);
+            ofstream File1("Vang.txt", ios::app);
+            File1 << x;
+            File1.close();
+        }
+        else
+        {
+            cout << " sai ki tu!!!!!!!" << endl;
+        }
     }
-    else
+    void ChinhSuaGiaoDichTien()
     {
-        ofstream File1("Tien.txt", ios::app);
-        ofstream File2("TrungBinhThuNhapTien.txt", ios::app);
+        cout << " nhap ma de thay doi thong tin giao dich" << endl;
+        int i = 0;
         GiaoDichTien a;
-        cin >> a;
-        File1 << a;
-        File2 << a.ReturnTriGia() << endl;
-        File2.close();
-        File1.close();
-    }
-}
-//=============================================================================================================
-void TimKiemGiaoDich()
-{
-
-    int ngay, thang, nam;
-    cout << " nhap ngay thang nam de xuat giao dich" << endl;
-    cout << " nhap ngay :";
-    do
-    {
-        cin >> ngay;
-        if (ngay < 0 || ngay > 31)
-        {
-            cout << " ki tu khong hop ly" << endl;
-        }
-    } while (ngay < 0 || ngay > 31);
-    cout << " nhap thang :";
-    do
-    {
-        cin >> thang;
-        if (thang < 0 || thang > 12)
-        {
-            cout << " ki tu khong hop ly" << endl;
-        }
-    } while (thang < 0 || thang > 12);
-    cout << " nhap nam :";
-    do
-    {
-        cin >> nam;
-        if (nam > 2024)
-        {
-            cout << " ki tu khong hop ly " << endl;
-        }
-
-    } while (nam > 2024);
-    cout << " 1 de tim kiem giao dich vang theo ngay thang nam :" << endl;
-    cout << " 2 de tim kiem giao dich tien theo ngay thang nam : " << endl;
-    int check;
-    cin >> check;
-    if (check == 1)
-    {
-        cout << " ngay " << ngay << " thang " << thang << " nam " << nam << endl;
-        ifstream File1("Vang.txt", ios::in);
-        GiaoDichVangDoc a[100];
-        int j = 0;
-        while (File1 >> a[j])
-        {
-
-            if (a[j].ReturnNgay() == ngay && a[j].ReturnThang() == thang && a[j].ReturnNam() == nam)
-            {
-                j++;
-            }
-        }
-        int count = j;
-        for (int i = 0; i < count; i++)
-        {
-            a[i].print();
-            cout << " -----------------------------------------" << endl;
-        }
-        File1.close();
-    }
-    else
-    {
-        cout << " ngay " << ngay << " thang " << thang << " nam " << nam << endl;
-        ifstream File1("Tien.txt", ios::in);
-        GiaoDichTienDoc a[100];
-        int j = 0;
-        while (File1 >> a[j])
-        {
-
-            if (a[j].ReturnNgay() == ngay && a[j].ReturnThang() == thang && a[j].ReturnNam() == nam)
-            {
-                j++;
-            }
-        }
-        int count = j;
-        for (int i = 0; i < count; i++)
-        {
-            a[i].print();
-            cout << " -----------------------------------------" << endl;
-        }
-
-        File1.close();
-    }
-}
-void TrungBinhTienGiaoDich()
-{
-
-    cout << " vang: trung binh tien giao dich vang " << endl;
-    cout << " tien: trung binh tien giao dich tien " << endl;
-    string chose;
-    cin.ignore();
-    do
-    {
-        getline(cin, chose);
-        if (chose != "vang" && chose != "tien")
-        {
-            cout << "sai ki tu nhap lai !!!!!" << endl;
-        }
-    } while (chose != "vang" && chose != "tien");
-    if (chose == "vang")
-    {
-        ifstream File1("TrungBinhThuNhapVang.txt", ios::in);
-        int x = 0;
-        int tong = 0;
-        int lan = 0;
-        while (File1 >> x)
-        {
-            tong += x;
-            ++lan;
-        }
-        cout << "tien giao dich trung binh la :" << tong / lan << "$" << endl;
-        File1.close();
-    }
-    else
-    {
-        ifstream File1("TrungBinhThuNhapTien.txt", ios::in);
-        int x = 0;
-        int tong = 0;
-        int lan = 0;
-        while (File1 >> x)
-        {
-            tong += x;
-            ++lan;
-        }
-        cout << "tien giao dich trung binh la :" << tong / lan << "$" << endl;
-        File1.close();
-    }
-}
-//========================================================//===============================================================================
-void ChinhSuaGiaoDichVang()
-{
-    cout << " nhap ma de thay doi thong tin giao dich" << endl;
-    int i = 0;
-    GiaoDichVangDoc a[100];
-    int ma, ngay, thang, nam, dongia, soluong, trigia;
-    bool check = false;
-    string LoaiVang;
-    do
-    {
-
+        bool check = false;
+        string LoaiTien;
+        int x;
+        int ma, ngay, thang, nam, dongia, soluong, trigia, tygia;
+        cout << endl;
+        cout << "nhap ma " << endl;
         cin >> ma;
-        ifstream File1("Vang.txt", ios::in);
-        while (File1 >> a[i])
+        ifstream file("Tien.txt", ios::in);
+        ofstream file1("TienTemp.txt", ios::trunc);
+        while (file >> x)
         {
-            if (a[i].ReturnMa() == ma)
+            file >> a;
+            if (a.ReturnMa() == ma)
             {
-                ngay = a[i].ReturnNgay();
-                thang = a[i].ReturnThang();
-                nam = a[i].ReturnNam();
-                dongia = a[i].ReturnDonGia();
-                soluong = a[i].ReturnSoLuong();
-                LoaiVang = a[i].ReturnLoaivang();
-                trigia = a[i].ReturnTriGia();
+                cout << "loading ............" << endl;
+                ma = a.ReturnMa();
+                ngay = a.ReturnNgay();
+                thang = a.ReturnThang();
+                nam = a.ReturnNam();
+                dongia = a.ReturnDonGia();
+                soluong = a.ReturnSoLuong();
+                trigia = a.ReturnTriGia();
+                tygia = a.ReturnTyGia();
+                LoaiTien = a.ReturnLoaiTien();
                 check = true;
-                i--;
             }
-            i++;
+            else
+            {
+                file1 << a;
+            }
         }
-        File1.close();
+        file1.close();
+        file.close();
         if (check == false)
         {
-            cout << " ma sai " << endl;
+            cout << "sai ma " << endl;
+            return;
         }
-    } while (check == false);
-    int count = i;
-    ofstream File2("Vang.txt", ios::trunc);
-    for (int i = 0; i < count; i++)
-    {
-        File2 << a[i];
-    }
-    File2.close();
-    // xoa doi tuong can sua ////////////////////////////////////==///////////////////////////////////////////////////////////////////////////
-    cout << "1 chinh sua ngay thang nam " << endl;
-    cout << "2 chinh sua don gia " << endl;
-    cout << "3 chinh sua so luong " << endl;
-    cout << "4 chinh sua loai vang  " << endl;
-    int chose;
-    cin >> chose;
-    if (chose == 1)
-    {
-        int NGAY, THANG, NAM;
-        cout << " nhap ngay :";
-        do
-        {
-            cin >> NGAY;
-            if (NGAY < 0 || NGAY > 31)
-            {
-                cout << " ki tu khong hop ly" << endl;
-            }
-        } while (NGAY < 0 || NGAY > 31);
-        cout << " nhap thang :";
-        do
-        {
-            cin >> THANG;
-            if (THANG < 0 || THANG > 12)
-            {
-                cout << " ki tu khong hop ly" << endl;
-            }
-        } while (THANG < 0 || THANG > 12);
-        cout << " nhap nam :";
-        do
-        {
-            cin >> NAM;
-            if (NAM > 2024)
-            {
-                cout << " ki tu khong hop ly " << endl;
-            }
 
-        } while (NAM > 2024);
-        GiaoDichVangDoc x(ma, NGAY, THANG, NAM, dongia, soluong, LoaiVang);
-        ofstream File1("Vang.txt", ios::app);
-        File1 << x;
-        File1.close();
-    }
-    else if (chose == 2)
-    {
-        ifstream File3("TrungBinhThuNhapVang.txt", ios::in);
-        int TriGia[100];
-        int j = 0;
-        while (File3 >> TriGia[j])
+        ofstream file2("Tien.txt", ios::trunc);
+        ifstream file3("TienTemp.txt", ios::in);
+        while (file3 >> a)
         {
-            if (trigia == TriGia[j])
+            file2 << a;
+        }
+        file3.close();
+        file2.close();
+        // xoa doi tuong can sua ////////////////////////////////////==///////////////////////////////////////////////////////////////////////////
+        cout << "1 chinh sua ngay thang nam " << endl;
+        cout << "2 chinh sua don gia " << endl;
+        cout << "3 chinh sua so luong " << endl;
+        cout << "4 chinh sua loai tien  " << endl;
+        int chose;
+        cin >> chose;
+        if (chose == 1)
+        {
+            int NGAY, THANG, NAM;
+            cout << " nhap ngay :";
+            do
             {
-                j--;
-            }
-            j++;
-        }
-        File3.close();
-        int count = j;
-        ofstream File4("TrungBinhThuNhapVang.txt", ios::trunc);
-        for (int i = 0; i < count; i++)
-        {
-            File4 << TriGia[i] << endl;
-        }
-        File4.close();
-
-        // xoa tri gia
-        cout << "Nhap don gia thay doi :";
-        int DONGIA;
-        cin >> DONGIA;
-        GiaoDichVangDoc x(ma, ngay, thang, nam, DONGIA, soluong, LoaiVang);
-        ofstream File1("Vang.txt", ios::app);
-        File1 << x;
-        File1.close();
-        ofstream File2("TrungBinhThuNhapVang.txt", ios::app);
-        File2 << x.ReturnTriGia() << endl;
-        File2.close();
-    }
-    else if (chose == 3)
-    {
-        ifstream File3("TrungBinhThuNhapVang.txt", ios::in);
-        int TriGia[100];
-        int j = 0;
-        while (File3 >> TriGia[j])
-        {
-            if (trigia == TriGia[j])
+                cin >> NGAY;
+                if (NGAY < 0 || NGAY > 31)
+                {
+                    cout << " ki tu khong hop ly" << endl;
+                }
+            } while (NGAY < 0 || NGAY > 31);
+            cout << " nhap thang :";
+            do
             {
-                j--;
-            }
-            j++;
-        }
-        File3.close();
-        int count = j;
-        ofstream File4("TrungBinhThuNhapVang.txt", ios::trunc);
-        for (int i = 0; i < count; i++)
-        {
-            File4 << TriGia[i] << endl;
-        }
-        File4.close();
+                cin >> THANG;
+                if (THANG < 0 || THANG > 12)
+                {
+                    cout << " ki tu khong hop ly" << endl;
+                }
+            } while (THANG < 0 || THANG > 12);
+            cout << " nhap nam :";
+            do
+            {
+                cin >> NAM;
+                if (NAM > 2024)
+                {
+                    cout << " ki tu khong hop ly " << endl;
+                }
 
-        // xoa tri gia
-        cout << "nhap so luong de thay doi :" << endl;
-        int SOLUONG;
-        cin >> SOLUONG;
-        GiaoDichVangDoc x(ma, ngay, thang, nam, dongia, SOLUONG, LoaiVang);
-        ofstream File1("Vang.txt", ios::app);
-        File1 << x;
-        File1.close();
-        ofstream File2("TrungBinhThuNhapVang.txt", ios::app);
-        File2 << x.ReturnTriGia() << endl;
-        File2.close();
+            } while (NAM > 2024);
+            GiaoDichTien x(ma, NGAY, THANG, NAM, dongia, soluong, tygia, LoaiTien);
+            ofstream File1("Tien.txt", ios::app);
+            File1 << x;
+            File1.close();
+        }
+        else if (chose == 2)
+        {
+            ifstream File3("TrungBinhThuNhapTien.txt", ios::in);
+            int TriGia[100];
+            int j = 0;
+            while (File3 >> TriGia[j])
+            {
+                if (trigia == TriGia[j])
+                {
+                    j--;
+                }
+                j++;
+            }
+            File3.close();
+            int count = j;
+            ofstream File4("TrungBinhThuNhapTien.txt", ios::trunc);
+            for (int i = 0; i < count; i++)
+            {
+                File4 << TriGia[i] << endl;
+            }
+            File4.close();
+            // xoa tri gia
+            cout << "Nhap don gia thay doi :";
+            int DONGIA;
+            cin >> DONGIA;
+            GiaoDichTien x(ma, ngay, thang, nam, DONGIA, soluong, tygia, LoaiTien);
+            ofstream File1("Tien.txt", ios::app);
+            File1 << x;
+            File1.close();
+            ofstream File2("TrungBinhThuNhapTien.txt", ios::app);
+            File2 << x.ReturnTriGia() << endl;
+            File2.close();
+        }
+        else if (chose == 3)
+        {
+            ifstream File3("TrungBinhThuNhapTien.txt", ios::in);
+            int TriGia[100];
+            int j = 0;
+            while (File3 >> TriGia[j])
+            {
+                if (trigia == TriGia[i])
+                {
+                    j--;
+                }
+                j++;
+            }
+            File3.close();
+            int count = j;
+            ofstream File4("TrungBinhThuNhapTien.txt", ios::trunc);
+            for (int i = 0; i < count; i++)
+            {
+                File4 << TriGia[i] << endl;
+            }
+            File4.close();
+            // xoa tri gia
+            cout << "nhap so luong de thay doi :" << endl;
+            int SOLUONG;
+            cin >> SOLUONG;
+            GiaoDichTien x(ma, ngay, thang, nam, dongia, SOLUONG, tygia, LoaiTien);
+            ofstream File1("Tien.txt", ios::app);
+            File1 << x;
+            File1.close();
+            ofstream File2("TrungBinhThuNhapTien.txt", ios::app);
+            File2 << x.ReturnTriGia() << endl;
+            File2.close();
+        }
+        else if (chose == 4)
+        {
+            cout << "nhap loai tien de thay doi :" << endl;
+            string LOAITIEN;
+            cin.ignore();
+            getline(cin, LOAITIEN);
+            GiaoDichTien x(ma, ngay, thang, nam, dongia, soluong, tygia, LOAITIEN);
+            ofstream File1("Tien.txt", ios::app);
+            File1 << x;
+            File1.close();
+        }
+        else
+        {
+            cout << " sai ki tu!!!!!!!" << endl;
+        }
     }
-    else if (chose == 4)
+
+    //================================================================================================================
+
+    void ThemGiaoDich()
     {
-        cout << "nhap loai vang de thay doi :" << endl;
-        string LOAIVANG;
+        cout << " vang: them giao dich vang " << endl;
+        cout << " tien: them giao dich tien " << endl;
+        string chose;
         cin.ignore();
-        getline(cin, LOAIVANG);
-        GiaoDichVangDoc x(ma, ngay, thang, nam, dongia, soluong, LOAIVANG);
-        ofstream File1("Vang.txt", ios::app);
-        File1 << x;
-        File1.close();
-    }
-    else
-    {
-        cout << " sai ki tu!!!!!!!" << endl;
-    }
-}
-//=================================================================================================================
-
-
-
-
-void ChinhSuaGiaoDichTien()
-{
-    cout << " nhap ma de thay doi thong tin giao dich" << endl;
-    int i = 0;
-    GiaoDichTienDoc a[100];
-    int ma, ngay, thang, nam, dongia, soluong, trigia, tygia;
-    bool check = false;
-    string LoaiTien;
-    do
-    {
-        cin >> ma;
-        ifstream File1("Tien.txt", ios::in);
-        while (File1 >> a[i])
+        do
         {
-            if (a[i].ReturnMa() == ma)
+            getline(cin, chose);
+            if (chose != "vang" && chose != "tien")
             {
-                ngay = a[i].ReturnNgay();
-                thang = a[i].ReturnThang();
-                nam = a[i].ReturnNam();
-                dongia = a[i].ReturnDonGia();
-                soluong = a[i].ReturnSoLuong();
-                LoaiTien = a[i].ReturnLoaiTien();
-                tygia = a[i].ReturnTyGia();
-                trigia = a[i].ReturnTriGia();
-                check = true;
-                i--;
+                cout << "sai ki tu nhap lai !!!!!" << endl;
             }
-            i++;
-        }
-        File1.close();
-        if (check == false)
+        } while (chose != "vang" && chose != "tien");
+        if (chose == "vang")
         {
-            cout << " ma sai " << endl;
+            ofstream File1("Vang.txt", ios::app);
+            ofstream File2("TrungBinhThuNhapVang.txt", ios::app);
+            GiaoDichVangNhap a;
+            cin >> a;
+            File1 << a.ReturnMa() << endl;
+            File1 << a;
+            File2 << a.ReturnTriGia() << endl;
+            File2.close();
+            File1.close();
         }
-    } while (check == false);
-    int count = i;
-    ofstream File2("Tien.txt", ios::trunc);
-    for (int i = 0; i < count; i++)
-    {
-        File2 << a[i];
+        else
+        {
+            ofstream File1("Tien.txt", ios::app);
+            ofstream File2("TrungBinhThuNhapTien.txt", ios::app);
+            GiaoDichTienNhap a;
+            cin >> a;
+            File1 << a.ReturnMa() << endl;
+            File1 << a;
+            File2 << a.ReturnTriGia() << endl;
+            File2.close();
+            File1.close();
+        }
     }
-
-
-
-    File2.close();
-    // xoa doi tuong can sua ////////////////////////////////////==///////////////////////////////////////////////////////////////////////////
-    cout << "1 chinh sua ngay thang nam " << endl;
-    cout << "2 chinh sua don gia " << endl;
-    cout << "3 chinh sua so luong " << endl;
-    cout << "4 chinh sua loai tien  " << endl;
-    int chose;
-    cin >> chose;
-    if (chose == 1)
+    //=============================================================================================================
+    void TimKiemGiaoDich()
     {
-        int NGAY, THANG, NAM;
+
+        int ngay, thang, nam;
+        cout << " nhap ngay thang nam de xuat giao dich" << endl;
         cout << " nhap ngay :";
         do
         {
-            cin >> NGAY;
-            if (NGAY < 0 || NGAY > 31)
+            cin >> ngay;
+            if (ngay < 0 || ngay > 31)
             {
                 cout << " ki tu khong hop ly" << endl;
             }
-        } while (NGAY < 0 || NGAY > 31);
+        } while (ngay < 0 || ngay > 31);
         cout << " nhap thang :";
         do
         {
-            cin >> THANG;
-            if (THANG < 0 || THANG > 12)
+            cin >> thang;
+            if (thang < 0 || thang > 12)
             {
                 cout << " ki tu khong hop ly" << endl;
             }
-        } while (THANG < 0 || THANG > 12);
+        } while (thang < 0 || thang > 12);
         cout << " nhap nam :";
         do
         {
-            cin >> NAM;
-            if (NAM > 2024)
+            cin >> nam;
+            if (nam > 2024)
             {
                 cout << " ki tu khong hop ly " << endl;
             }
 
-        } while (NAM > 2024);
-        GiaoDichTienDoc x(ma, NGAY, THANG, NAM, dongia, soluong, tygia, LoaiTien);
-        ofstream File1("Tien.txt", ios::app);
-        File1 << x;
-        File1.close();
+        } while (nam > 2024);
+        cout << " 1 de tim kiem giao dich vang theo ngay thang nam :" << endl;
+        cout << " 2 de tim kiem giao dich tien theo ngay thang nam : " << endl;
+        int check;
+        cin >> check;
+        if (check == 1)
+        {
+            cout << " ngay " << ngay << " thang " << thang << " nam " << nam << endl;
+            ifstream File1("Vang.txt", ios::in);
+            GiaoDichVang a[100];
+            int j = 0;
+            while (File1 >> a[j])
+            {
+
+                if (a[j].ReturnNgay() == ngay && a[j].ReturnThang() == thang && a[j].ReturnNam() == nam)
+                {
+                    j++;
+                }
+            }
+            int count = j;
+            for (int i = 0; i < count; i++)
+            {
+                a[i].print();
+                cout << " -----------------------------------------" << endl;
+            }
+            File1.close();
+        }
+        else
+        {
+            cout << " ngay " << ngay << " thang " << thang << " nam " << nam << endl;
+            ifstream File1("Tien.txt", ios::in);
+            GiaoDichTien a[100];
+            int j = 0;
+            while (File1 >> a[j])
+            {
+
+                if (a[j].ReturnNgay() == ngay && a[j].ReturnThang() == thang && a[j].ReturnNam() == nam)
+                {
+                    j++;
+                }
+            }
+            int count = j;
+            for (int i = 0; i < count; i++)
+            {
+                a[i].print();
+                cout << " -----------------------------------------" << endl;
+            }
+
+            File1.close();
+        }
     }
-    else if (chose == 2)
+    void TrungBinhTienGiaoDich()
     {
+
+        cout << " vang: trung binh tien giao dich vang " << endl;
+        cout << " tien: trung binh tien giao dich tien " << endl;
+        string chose;
+        cin.ignore();
+        do
+        {
+            getline(cin, chose);
+            if (chose != "vang" && chose != "tien")
+            {
+                cout << "sai ki tu nhap lai !!!!!" << endl;
+            }
+        } while (chose != "vang" && chose != "tien");
+        if (chose == "vang")
+        {
+            ifstream File1("TrungBinhThuNhapVang.txt", ios::in);
+            int x = 0;
+            int tong = 0;
+            int lan = 0;
+            while (File1 >> x)
+            {
+                tong += x;
+                ++lan;
+            }
+            cout << "tien giao dich trung binh la :" << tong / lan << "$" << endl;
+            File1.close();
+        }
+        else
+        {
+            ifstream File1("TrungBinhThuNhapTien.txt", ios::in);
+            int x = 0;
+            int tong = 0;
+            int lan = 0;
+            while (File1 >> x)
+            {
+                tong += x;
+                ++lan;
+            }
+            cout << "tien giao dich trung binh la :" << tong / lan << "$" << endl;
+            File1.close();
+        }
+    }
+    //========================================================//===============================================================================
+
+    //=================================================================================================================
+
+    //=========================================================================================================================================
+    void XoaGiaoDichTien()
+    {
+        cout << " nhap ma de xoa thong tin giao dich" << endl;
+        int i = 0;
+        GiaoDichTien a[100];
+        int ma, trigia;
+        bool check = false;
+        string LoaiTien;
+        do
+        {
+            cin >> ma;
+            ifstream File1("Tien.txt", ios::in);
+            while (File1 >> a[i])
+            {
+                if (a[i].ReturnMa() == ma)
+                {
+                    LoaiTien = a[i].ReturnLoaiTien();
+                    trigia = a[i].ReturnTriGia();
+                    check = true;
+                    i--;
+                }
+                i++;
+            }
+            File1.close();
+            if (check == false)
+            {
+                cout << " ma sai " << endl;
+            }
+        } while (check == false);
+        int count = i;
+        ofstream File2("Tien.txt", ios::trunc);
+        for (int i = 0; i < count; i++)
+        {
+            File2 << a[i];
+        }
+        File2.close();
         ifstream File3("TrungBinhThuNhapTien.txt", ios::in);
         int TriGia[100];
         int j = 0;
@@ -755,203 +887,80 @@ void ChinhSuaGiaoDichTien()
             j++;
         }
         File3.close();
-        int count = j;
+        int count1 = j;
         ofstream File4("TrungBinhThuNhapTien.txt", ios::trunc);
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count1; i++)
         {
             File4 << TriGia[i] << endl;
         }
         File4.close();
-        // xoa tri gia
-        cout << "Nhap don gia thay doi :";
-        int DONGIA;
-        cin >> DONGIA;
-        GiaoDichTienDoc x(ma, ngay, thang, nam, DONGIA, soluong, tygia, LoaiTien);
-        ofstream File1("Tien.txt", ios::app);
-        File1 << x;
-        File1.close();
-        ofstream File2("TrungBinhThuNhapTien.txt", ios::app);
-        File2 << x.ReturnTriGia() << endl;
-        File2.close();
     }
-    else if (chose == 3)
+
+    void XoaGiaoDichVang()
     {
-        ifstream File3("TrungBinhThuNhapTien.txt", ios::in);
+        cout << " nhap ma de xoa thong tin giao dich" << endl;
+        int i = 0;
+        GiaoDichVang a[100];
+        int ma, trigia;
+        bool check = false;
+
+        do
+        {
+
+            cin >> ma;
+            ifstream File1("Vang.txt", ios::in);
+            while (File1 >> a[i])
+            {
+                if (a[i].ReturnMa() == ma)
+                {
+                    trigia = a[i].ReturnTriGia();
+                    check = true;
+                    i--;
+                }
+                i++;
+            }
+            File1.close();
+            if (check == false)
+            {
+                cout << " ma sai " << endl;
+            }
+        } while (check == false);
+        int count = i;
+        ofstream File2("Vang.txt", ios::trunc);
+        for (int i = 0; i < count; i++)
+        {
+            File2 << a[i];
+        }
+        File2.close();
+        ifstream File3("TrungBinhThuNhapVang.txt", ios::in);
         int TriGia[100];
         int j = 0;
         while (File3 >> TriGia[j])
         {
-            if (trigia == TriGia[i])
+            if (trigia == TriGia[j])
             {
                 j--;
             }
             j++;
         }
         File3.close();
-        int count = j;
-        ofstream File4("TrungBinhThuNhapTien.txt", ios::trunc);
-        for (int i = 0; i < count; i++)
+        int count1 = j;
+        ofstream File4("TrungBinhThuNhapVang.txt", ios::trunc);
+        for (int i = 0; i < count1; i++)
         {
             File4 << TriGia[i] << endl;
         }
         File4.close();
-        // xoa tri gia
-        cout << "nhap so luong de thay doi :" << endl;
-        int SOLUONG;
-        cin >> SOLUONG;
-        GiaoDichTienDoc x(ma, ngay, thang, nam, dongia, SOLUONG, tygia, LoaiTien);
-        ofstream File1("Tien.txt", ios::app);
-        File1 << x;
-        File1.close();
-        ofstream File2("TrungBinhThuNhapTien.txt", ios::app);
-        File2 << x.ReturnTriGia() << endl;
-        File2.close();
     }
-    else if (chose == 4)
-    {
-        cout << "nhap loai vang de thay doi :" << endl;
-        string LOAITIEN;
-        cin.ignore();
-        getline(cin, LOAITIEN);
-        GiaoDichTienDoc x(ma, ngay, thang, nam, dongia, soluong, tygia, LOAITIEN);
-        ofstream File1("Tien.txt", ios::app);
-        File1 << x;
-        File1.close();
-    }
-    else
-    {
-        cout << " sai ki tu!!!!!!!" << endl;
-    }
-
-
-
-}
-//=========================================================================================================================================
-void XoaGiaoDichTien()
-{
-    cout << " nhap ma de xoa thong tin giao dich" << endl;
-    int i = 0;
-    GiaoDichTienDoc a[100];
-    int ma, trigia;
-    bool check = false;
-    string LoaiTien;
-    do
-    {
-        cin >> ma;
-        ifstream File1("Tien.txt", ios::in);
-        while (File1 >> a[i])
-        {
-            if (a[i].ReturnMa() == ma)
-            {
-                LoaiTien = a[i].ReturnLoaiTien();
-                trigia = a[i].ReturnTriGia();
-                check = true;
-                i--;
-            }
-            i++;
-        }
-        File1.close();
-        if (check == false)
-        {
-            cout << " ma sai " << endl;
-        }
-    } while (check == false);
-    int count = i;
-    ofstream File2("Tien.txt", ios::trunc);
-    for (int i = 0; i < count; i++)
-    {
-        File2 << a[i];
-    }
-    File2.close();
-    ifstream File3("TrungBinhThuNhapTien.txt", ios::in);
-    int TriGia[100];
-    int j = 0;
-    while (File3 >> TriGia[j])
-    {
-        if (trigia == TriGia[j])
-        {
-            j--;
-        }
-        j++;
-    }
-    File3.close();
-    int count1 = j;
-    ofstream File4("TrungBinhThuNhapTien.txt", ios::trunc);
-    for (int i = 0; i < count1; i++)
-    {
-        File4 << TriGia[i] << endl;
-    }
-    File4.close();
-}
-
-
-void XoaGiaoDichVang()
-{
-    cout << " nhap ma de xoa thong tin giao dich" << endl;
-    int i = 0;
-    GiaoDichVangDoc a[100];
-    int ma, trigia;
-    bool check = false;
-
-    do
-    {
-
-        cin >> ma;
-        ifstream File1("Vang.txt", ios::in);
-        while (File1 >> a[i])
-        {
-            if (a[i].ReturnMa() == ma)
-            {
-                trigia = a[i].ReturnTriGia();
-                check = true;
-                i--;
-            }
-            i++;
-        }
-        File1.close();
-        if (check == false)
-        {
-            cout << " ma sai " << endl;
-        }
-    } while (check == false);
-    int count = i;
-    ofstream File2("Vang.txt", ios::trunc);
-    for (int i = 0; i < count; i++)
-    {
-        File2 << a[i];
-    }
-    File2.close();
-    ifstream File3("TrungBinhThuNhapVang.txt", ios::in);
-    int TriGia[100];
-    int j = 0;
-    while (File3 >> TriGia[j])
-    {
-        if (trigia == TriGia[j])
-        {
-            j--;
-        }
-        j++;
-    }
-    File3.close();
-    int count1 = j;
-    ofstream File4("TrungBinhThuNhapVang.txt", ios::trunc);
-    for (int i = 0; i < count1; i++)
-    {
-        File4 << TriGia[i] << endl;
-    }
-    File4.close();
-}
-
-
-
+};
 //=================================================================================================================
-
 
 int check;
 //=================================================================================================================
 
 void menu()
 {
+    DanhSachGiaoDich a;
     switch (check)
     {
     case 1:
@@ -964,10 +973,10 @@ void menu()
         TrungBinhTienGiaoDich();
         break;
     case 4:
-        ChinhSuaGiaoDichTien();
+        a.ChinhSuaGiaoDichTien();
         break;
     case 5:
-        ChinhSuaGiaoDichVang();
+        a.ChinhSuaGiaoDichVang();
         break;
         break;
     case 6:
@@ -980,8 +989,6 @@ void menu()
         break;
     }
 }
-
-
 
 //==============================================================================================================================================
 

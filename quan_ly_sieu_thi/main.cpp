@@ -6,6 +6,25 @@ using namespace std;
 #include <string.h>
 #include <cstring>
 
+template <class T>
+T sort(T a[50], int m)
+{
+
+    for (int i = 0; i < m - 1; i++)
+    {
+        for (int j = 0; j < m - 1 - i; j++)
+        {
+            if (a[j] < a[j + 1])
+            {
+                swap(a[j], a[j + 1]);
+            }
+        }
+    }
+    return a[0];
+}
+
+//===========================================================================================================
+
 class HangHoa
 {
 protected:
@@ -25,11 +44,12 @@ public:
         cout << "So luong ton kho :" << SoLuongTon << endl;
         cout << "Don gia :" << DonGia << endl;
     }
+
 };
 
 //====================================================================================================================================================
 
-class ThucPham : public HangHoa
+class ThucPhamNhap : public HangHoa
 {
 private:
     int NgaySanXuat;
@@ -41,7 +61,7 @@ private:
     string NhaCungCap;
 
 public:
-    ThucPham(int ma, int soluong, int dongia, int ngays, int thangs, int nams, int ngayh, int thangh, int namh, string tenhang, string nhacungcap)
+    ThucPhamNhap(int ma, int soluong, int dongia, int ngays, int thangs, int nams, int ngayh, int thangh, int namh, string tenhang, string nhacungcap) 
     {
         this->MaHang = ma;
         this->SoLuongTon = soluong;
@@ -55,10 +75,10 @@ public:
         this->TenHang = tenhang;
         this->NhaCungCap = nhacungcap;
     };
-    ThucPham(){};
-    ~ThucPham(){};
+    ThucPhamNhap(){};
+    ~ThucPhamNhap(){};
 
-    friend ostream &operator<<(ostream &out, ThucPham x)
+    friend ostream &operator<<(ostream &out, ThucPhamNhap x)
     {
         out << x.MaHang << endl;
         out << x.TenHang << endl;
@@ -74,7 +94,7 @@ public:
         out << x.NhaCungCap << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, ThucPham &x)
+    friend istream &operator>>(istream &in, ThucPhamNhap &x)
     {
         cout << " nhap ma giao dich :";
         in >> x.MaHang;
@@ -152,7 +172,7 @@ public:
     }
 };
 //====================================================================================================================================================
-class ThucPhamDoc : public HangHoa
+class ThucPham : public HangHoa
 {
 private:
     int NgaySanXuat;
@@ -165,12 +185,20 @@ private:
 
 public:
     friend void CapNhatThongTin();
+    int TriTonKho()
+    {
+        return SoLuongTon * DonGia * (1 + 5 / 100);
+    }
+    friend bool operator<(ThucPham a, ThucPham b)
+    {
+        return a.TriTonKho() < b.TriTonKho();
+    }
     friend int CheckMaHangHoaTonTai(int c, int b, string a);
     friend void TimKiem();
-    ThucPhamDoc(){};
-    ~ThucPhamDoc(){};
+    ThucPham(){};
+    ~ThucPham(){};
     friend void XoaHangHoa();
-    friend ostream &operator<<(ostream &out, ThucPhamDoc x)
+    friend ostream &operator<<(ostream &out, ThucPham x)
     {
         out << x.MaHang << endl;
         out << x.TenHang << endl;
@@ -186,7 +214,7 @@ public:
         out << x.NhaCungCap << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, ThucPhamDoc &x)
+    friend istream &operator>>(istream &in, ThucPham &x)
     {
         in >> x.MaHang;
         in.ignore();
@@ -200,7 +228,7 @@ public:
         in >> x.NgayHetHan;
         in >> x.ThangHetHan;
         in >> x.NamHetHan;
-        
+
         in.ignore();
         getline(in, x.NhaCungCap);
         return in;
@@ -215,7 +243,7 @@ public:
 };
 //====================================================================================================================================================4
 
-class DienMay : public HangHoa
+class DienMayNhap : public HangHoa
 {
 private:
     int ThoiGianBaoHanh;
@@ -223,9 +251,9 @@ private:
     string ChungLoai;
 
 public:
-    DienMay(){};
-    ~DienMay(){};
-    friend ostream &operator<<(ostream &out, DienMay x)
+    DienMayNhap(){};
+    ~DienMayNhap(){};
+    friend ostream &operator<<(ostream &out, DienMayNhap x)
     {
         out << x.MaHang << endl;
         out << x.TenHang << endl;
@@ -238,7 +266,7 @@ public:
 
         return out;
     }
-    friend istream &operator>>(istream &in, DienMay &x)
+    friend istream &operator>>(istream &in, DienMayNhap &x)
     {
         cout << " nhap ma giao dich :";
         in >> x.MaHang;
@@ -263,7 +291,7 @@ public:
 };
 //===============================================================================================================================================
 
-class DienMayDoc : public HangHoa
+class DienMay : public HangHoa
 {
 private:
     int ThoiGianBaoHanh;
@@ -271,12 +299,20 @@ private:
     string ChungLoai;
 
 public:
+    int TriTonKho()
+    {
+        return SoLuongTon * DonGia * (1 + 10 / 100);
+    }
+    friend bool operator<(DienMay a, DienMay b)
+    {
+        return a.TriTonKho() < b.TriTonKho();
+    }
     friend void CapNhatThongTin();
     friend void XoaHangHoa();
     friend int CheckMaHangHoaTonTai(int c, int b, string a);
     friend void TimKiem();
     friend void CapNhatThongTinDienMay();
-    DienMayDoc(int mahang, int soluong, int dongia, int thoigianbaohanh, int congxuat, string tenhang, string chungloai)
+    DienMay(int mahang, int soluong, int dongia, int thoigianbaohanh, int congxuat, string tenhang, string chungloai)
     {
         this->MaHang = mahang;
         this->SoLuongTon = soluong;
@@ -286,9 +322,9 @@ public:
         this->TenHang = tenhang;
         this->ChungLoai = chungloai;
     };
-    ~DienMayDoc(){};
-    DienMayDoc(){};
-    friend ostream &operator<<(ostream &out, DienMayDoc x)
+    ~DienMay(){};
+    DienMay(){};
+    friend ostream &operator<<(ostream &out, DienMay x)
     {
         out << x.MaHang << endl;
         out << x.TenHang << endl;
@@ -301,7 +337,7 @@ public:
 
         return out;
     }
-    friend istream &operator>>(istream &in, DienMayDoc &x)
+    friend istream &operator>>(istream &in, DienMay &x)
     {
 
         in >> x.MaHang;
@@ -325,7 +361,7 @@ public:
 };
 //=====================================================================================================================================================
 
-class MayMac : public HangHoa
+class MayMacNhap : public HangHoa
 {
 private:
     string TenNhaSanXuat;
@@ -334,9 +370,9 @@ private:
     int NamNhapKho;
 
 public:
-    MayMac(){};
-    ~MayMac(){};
-    friend ostream &operator<<(ostream &out, MayMac x)
+    MayMacNhap(){};
+    ~MayMacNhap(){};
+    friend ostream &operator<<(ostream &out, MayMacNhap x)
     {
         out << x.MaHang << endl;
         out << x.TenHang << endl;
@@ -349,7 +385,7 @@ public:
         out << x.TenNhaSanXuat << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, MayMac &x)
+    friend istream &operator>>(istream &in, MayMacNhap &x)
     {
         cout << " nhap ma giao dich :";
         in >> x.MaHang;
@@ -399,7 +435,7 @@ public:
 };
 
 //=====================================================================================================================================================
-class MayMacDoc : public HangHoa
+class MayMac : public HangHoa
 {
 private:
     string TenNhaSanXuat;
@@ -408,6 +444,14 @@ private:
     int NamNhapKho;
 
 public:
+    int TriTonKho()
+    {
+        return SoLuongTon * DonGia * (1 + 10 / 100);
+    }
+    friend bool operator<(MayMac a, MayMac b)
+    {
+        return a.TriTonKho() < b.TriTonKho();
+    }
     void print()
     {
         HangHoa::print();
@@ -419,7 +463,7 @@ public:
     friend void XoaHangHoa();
     friend void CapNhatThongTinMayMac();
     friend int CheckMaHangHoaTonTai(int c, int b, string a);
-    MayMacDoc(int mahang, int soluong, int dongia, int ngay, int thang, int nam, string tenhang, string tennhasanxuat)
+    MayMac(int mahang, int soluong, int dongia, int ngay, int thang, int nam, string tenhang, string tennhasanxuat)
     {
         this->MaHang = mahang;
         this->SoLuongTon = soluong;
@@ -430,9 +474,9 @@ public:
         this->TenNhaSanXuat = tennhasanxuat;
         this->TenHang = tenhang;
     };
-    MayMacDoc(){};
-    ~MayMacDoc(){};
-    friend ostream &operator<<(ostream &out, MayMacDoc x)
+    MayMac(){};
+    ~MayMac(){};
+    friend ostream &operator<<(ostream &out, MayMac x)
     {
         out << x.MaHang << endl;
         out << x.TenHang << endl;
@@ -445,7 +489,7 @@ public:
         out << x.TenNhaSanXuat << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, MayMacDoc &x)
+    friend istream &operator>>(istream &in, MayMac &x)
     {
 
         in >> x.MaHang;
@@ -467,7 +511,7 @@ int CheckMaHangHoaTonTai(int chose, int z, string ten)
 {
     if (chose == 1)
     {
-        ThucPhamDoc a;
+        ThucPham a;
         ifstream File("ThucPham.txt", ios::in);
         while (File >> a)
         {
@@ -482,7 +526,7 @@ int CheckMaHangHoaTonTai(int chose, int z, string ten)
     }
     else if (chose == 2)
     {
-        DienMayDoc a;
+        DienMay a;
         ifstream File("DienMay.txt", ios::in);
         while (File >> a)
         {
@@ -497,7 +541,7 @@ int CheckMaHangHoaTonTai(int chose, int z, string ten)
     }
     else
     {
-        MayMacDoc a;
+        MayMac a;
         ifstream File("MayMac.txt", ios::in);
         while (File >> a)
         {
@@ -532,7 +576,7 @@ void ThemHangHoa()
             cin.ignore();
             getline(cin, ten);
         } while (CheckMaHangHoaTonTai(chose, ma, ten));
-        ThucPham a;
+        ThucPhamNhap a;
         ofstream File("ThucPham.txt", ios::app);
         cin >> a;
         File << a;
@@ -599,7 +643,7 @@ void TimKiem()
             cin.ignore();
             getline(cin, ten);
         } while (!CheckMaHangHoaTonTai(chose, ma, ten));
-        ThucPhamDoc a;
+        ThucPham a;
         ifstream File("ThucPham.txt", ios::in);
         while (File >> a)
         {
@@ -621,7 +665,7 @@ void TimKiem()
             cin.ignore();
             getline(cin, ten);
         } while (!CheckMaHangHoaTonTai(chose, ma, ten));
-        DienMayDoc a;
+        DienMay a;
         ifstream File("DienMay.txt", ios::in);
         while (File >> a)
         {
@@ -643,7 +687,7 @@ void TimKiem()
             cin.ignore();
             getline(cin, ten);
         } while (!CheckMaHangHoaTonTai(chose, ma, ten));
-        MayMacDoc a;
+        MayMac a;
         ifstream File("MayMac.txt", ios::in);
         while (File >> a)
         {
@@ -676,7 +720,7 @@ void CapNhatThongTinDienMay()
         cin.ignore();
 
         getline(cin, t);
-        DienMayDoc a;
+        DienMay a;
         ifstream File("DienMay.txt", ios::in);
         while (File >> a)
         {
@@ -693,7 +737,7 @@ void CapNhatThongTinDienMay()
         File.close();
 
     } while (checking == false);
-    DienMayDoc a;
+    DienMay a;
     ifstream File1("DienMay.txt", ios::in);
     ofstream File2("DienMayTemp.txt", ios::trunc);
     while (File1 >> a)
@@ -739,7 +783,7 @@ void CapNhatThongTinDienMay()
         int THOIGIANBAOHANH;
         cout << "nhap thoi gian bao hanh thay the :";
         cin >> THOIGIANBAOHANH;
-        DienMayDoc x(ma, soluong, dongia, THOIGIANBAOHANH, congxuat, tenhang, chungloai);
+        DienMay x(ma, soluong, dongia, THOIGIANBAOHANH, congxuat, tenhang, chungloai);
         ofstream File5("DienMay.txt", ios::app);
         File5 << x;
         File5.close();
@@ -749,7 +793,7 @@ void CapNhatThongTinDienMay()
         int CONGXUAT;
         cout << "nhap cong xuat thay the :";
         cin >> CONGXUAT;
-        DienMayDoc x(ma, soluong, dongia, thoigianbaohanh, CONGXUAT, tenhang, chungloai);
+        DienMay x(ma, soluong, dongia, thoigianbaohanh, CONGXUAT, tenhang, chungloai);
         ofstream File5("DienMay.txt", ios::app);
         File5 << x;
         File5.close();
@@ -760,7 +804,7 @@ void CapNhatThongTinDienMay()
         cout << "nhap chung loai  thay the :";
         cin.ignore();
         getline(cin, CHUNGLOAI);
-        DienMayDoc x(ma, soluong, dongia, thoigianbaohanh, congxuat, tenhang, CHUNGLOAI);
+        DienMay x(ma, soluong, dongia, thoigianbaohanh, congxuat, tenhang, CHUNGLOAI);
         ofstream File5("DienMay.txt", ios::app);
         File5 << x;
         File5.close();
@@ -770,7 +814,7 @@ void CapNhatThongTinDienMay()
         cout << "nhap luong ton thay the:";
         int LUONGTON;
         cin >> LUONGTON;
-        DienMayDoc x(ma, LUONGTON, dongia, thoigianbaohanh, congxuat, tenhang, chungloai);
+        DienMay x(ma, LUONGTON, dongia, thoigianbaohanh, congxuat, tenhang, chungloai);
         ofstream File5("DienMay.txt", ios::app);
         File5 << x;
         File5.close();
@@ -780,7 +824,7 @@ void CapNhatThongTinDienMay()
         cout << "nhap don gia thay the :";
         int DONGIA;
         cin >> DONGIA;
-        DienMayDoc x(ma, soluong, DONGIA, thoigianbaohanh, congxuat, tenhang, chungloai);
+        DienMay x(ma, soluong, DONGIA, thoigianbaohanh, congxuat, tenhang, chungloai);
         ofstream File5("DienMay.txt", ios::app);
         File5 << x;
         File5.close();
@@ -804,7 +848,7 @@ void CapNhatThongTinMayMac()
         cout << "nhap ten:";
         cin.ignore();
         getline(cin, t);
-        MayMacDoc a;
+        MayMac a;
         ifstream File("MayMac.txt", ios::in);
         while (File >> a)
         {
@@ -820,7 +864,7 @@ void CapNhatThongTinMayMac()
         }
         File.close();
     } while (checking == false);
-    MayMacDoc a;
+    MayMac a;
     ifstream File1("MayMac.txt", ios::in);
     ofstream File2("MayMacTemp.txt", ios::trunc);
     while (File1 >> a)
@@ -890,7 +934,7 @@ void CapNhatThongTinMayMac()
             }
 
         } while (NAM > 2024);
-        MayMacDoc x(ma, soluong, dongia, NGAY, THANG, NAM, tenhang, tennhasanxuat);
+        MayMac x(ma, soluong, dongia, NGAY, THANG, NAM, tenhang, tennhasanxuat);
         ofstream File5("MayMac.txt", ios::app);
         File5 << x;
         File5.close();
@@ -901,7 +945,7 @@ void CapNhatThongTinMayMac()
         string NHASANXUAT;
         cin.ignore();
         getline(cin, NHASANXUAT);
-        MayMacDoc x(ma, soluong, dongia, ngay, thang, nam, tenhang, NHASANXUAT);
+        MayMac x(ma, soluong, dongia, ngay, thang, nam, tenhang, NHASANXUAT);
         ofstream File5("MayMac.txt", ios::app);
         File5 << x;
         File5.close();
@@ -912,7 +956,7 @@ void CapNhatThongTinMayMac()
         cout << "luong ton :";
         int LUONGTON;
         cin >> LUONGTON;
-        MayMacDoc x(ma, LUONGTON, dongia, ngay, thang, nam, tenhang, tennhasanxuat);
+        MayMac x(ma, LUONGTON, dongia, ngay, thang, nam, tenhang, tennhasanxuat);
         ofstream File5("MayMac.txt", ios::app);
         File5 << x;
         File5.close();
@@ -922,7 +966,7 @@ void CapNhatThongTinMayMac()
         cout << "don gia :";
         int DONGIA;
         cin >> DONGIA;
-        MayMacDoc x(ma, soluong, DONGIA, ngay, thang, nam, tenhang, tennhasanxuat);
+        MayMac x(ma, soluong, DONGIA, ngay, thang, nam, tenhang, tennhasanxuat);
         ofstream File5("MayMac.txt", ios::app);
         File5 << x;
         File5.close();
@@ -953,7 +997,7 @@ void CapNhatThongTin()
             cout << "nhap ten :";
             cin.ignore();
             getline(cin, t);
-            ThucPhamDoc a;
+            ThucPham a;
             ifstream File("ThucPham.txt", ios::in);
             while (File >> a)
             {
@@ -971,7 +1015,7 @@ void CapNhatThongTin()
 
         } while (checking == false);
 
-        ThucPhamDoc a;
+        ThucPham a;
         ifstream File1("ThucPham.txt", ios::in);
         ofstream File2("ThucPhamTemp.txt", ios::trunc);
         while (File1 >> a)
@@ -1047,7 +1091,7 @@ void CapNhatThongTin()
                 }
 
             } while (NAM > 2024);
-            ThucPham x(ma, soluong, dongia, NGAY, THANG, NAM, ngayh, thangh, namh, tenhang, nhacungcap);
+            ThucPhamNhap x(ma, soluong, dongia, NGAY, THANG, NAM, ngayh, thangh, namh, tenhang, nhacungcap);
             ofstream File5("ThucPham.txt", ios::app);
             File5 << x;
             File5.close();
@@ -1083,7 +1127,7 @@ void CapNhatThongTin()
                 }
 
             } while (NAM > 2024);
-            ThucPham x(ma, soluong, dongia, ngays, thangs, nams, NGAY, THANG, NAM, tenhang, nhacungcap);
+            ThucPhamNhap x(ma, soluong, dongia, ngays, thangs, nams, NGAY, THANG, NAM, tenhang, nhacungcap);
             ofstream File5("ThucPham.txt", ios::app);
             File5 << x;
             File5.close();
@@ -1094,7 +1138,7 @@ void CapNhatThongTin()
             string NHACUNGCAP;
             cin.ignore();
             getline(cin, NHACUNGCAP);
-            ThucPham x(ma, soluong, dongia, ngays, thangs, nams, ngayh, thangh, namh, tenhang, NHACUNGCAP);
+            ThucPhamNhap x(ma, soluong, dongia, ngays, thangs, nams, ngayh, thangh, namh, tenhang, NHACUNGCAP);
             ofstream File5("ThucPham.txt", ios::app);
             File5 << x;
             File5.close();
@@ -1104,7 +1148,7 @@ void CapNhatThongTin()
             cout << "nhap luong ton thay the:";
             int LUONGTON;
             cin >> LUONGTON;
-            ThucPham x(ma, LUONGTON, dongia, ngays, thangs, nams, ngayh, thangh, namh, tenhang, nhacungcap);
+            ThucPhamNhap x(ma, LUONGTON, dongia, ngays, thangs, nams, ngayh, thangh, namh, tenhang, nhacungcap);
             ofstream File5("ThucPham.txt", ios::app);
             File5 << x;
             File5.close();
@@ -1114,7 +1158,7 @@ void CapNhatThongTin()
             cout << "nhap don gia thay the :";
             int DONGIA;
             cin >> DONGIA;
-            ThucPham x(ma, soluong, DONGIA, ngays, thangs, nams, ngayh, thangh, namh, tenhang, nhacungcap);
+            ThucPhamNhap x(ma, soluong, DONGIA, ngays, thangs, nams, ngayh, thangh, namh, tenhang, nhacungcap);
             ofstream File5("ThucPham.txt", ios::app);
             File5 << x;
             File5.close();
@@ -1156,7 +1200,7 @@ void XoaHangHoa()
             cout << "nhap ma de tim san pham :";
 
             cin >> ma;
-            ThucPhamDoc a;
+            ThucPham a;
             ifstream File("ThucPham.txt", ios::in);
             while (File >> a)
             {
@@ -1174,7 +1218,7 @@ void XoaHangHoa()
 
         } while (checking == false);
 
-        ThucPhamDoc a;
+        ThucPham a;
         ifstream File1("ThucPham.txt", ios::in);
         ofstream File2("ThucPhamTemp.txt", ios::trunc);
         while (File1 >> a)
@@ -1198,7 +1242,7 @@ void XoaHangHoa()
         }
         File3.close();
         File4.close();
-        cout << "da xoa ma ........" << endl;
+        cout << "da xoa ma " << ma << "cua thuc pham" << endl;
     }
     else if (chose == 2)
     {
@@ -1208,7 +1252,7 @@ void XoaHangHoa()
         {
             cout << "nhap ma de tim san pham :";
             cin >> ma;
-            MayMacDoc a;
+            MayMac a;
             ifstream File("DienMay.txt", ios::in);
             while (File >> a)
             {
@@ -1225,7 +1269,7 @@ void XoaHangHoa()
             File.close();
 
         } while (checking == false);
-        DienMayDoc a;
+        DienMay a;
         ifstream File1("DienMay.txt", ios::in);
         ofstream File2("DienMayTemp.txt", ios::trunc);
         while (File1 >> a)
@@ -1259,7 +1303,7 @@ void XoaHangHoa()
         {
             cout << "nhap ma de tim san pham :";
             cin >> ma;
-            MayMacDoc a;
+            MayMac a;
             ifstream File("MayMac.txt", ios::in);
             while (File >> a)
             {
@@ -1275,7 +1319,7 @@ void XoaHangHoa()
             }
             File.close();
         } while (checking == false);
-        MayMacDoc a;
+        MayMac a;
         ifstream File1("MayMac.txt", ios::in);
         ofstream File2("MayMacTemp.txt", ios::trunc);
         while (File1 >> a)
@@ -1307,11 +1351,56 @@ void XoaHangHoa()
     }
 }
 //=====================================================================================================================================================
-
+void MaxThucPham()
+{
+    ThucPham b;
+    ThucPham a[50];
+    int i = 0;
+    ifstream file("ThucPham.txt", ios::in);
+    while (file >> a[i])
+    {
+        i++;
+    }
+    int m = i;
+    file.close();
+    b = sort(a, m);
+    b.print();
+}
 //=====================================================================================================================================================
 
 //=====================================================================================================================================================
-
+void MacDienMay()
+{
+    DienMay b;
+    DienMay a[50];
+    int i = 0;
+    ifstream file("DienMay.txt", ios::in);
+    while (file >> a[i])
+    {
+        i++;
+    }
+    int m = i;
+    file.close();
+    cout << "mat hang co gia tri ton kho lon nhat :" << endl;
+    b = sort(a, m);
+    b.print();
+};
+void MaxMayMac()
+{
+    MayMac b;
+    MayMac a[50];
+    int i = 0;
+    ifstream file("MayMac.txt", ios::in);
+    while (file >> a[i])
+    {
+        i++;
+    }
+    int m = i;
+    file.close();
+    cout << "mat hang co gia tri ton kho lon nhat :" << endl;
+    b = sort(a, m);
+    b.print();
+};
 int check;
 //=====================================================================================================================================================
 
@@ -1331,6 +1420,15 @@ void menu()
     case 4:
         XoaHangHoa();
         break;
+    case 5:
+        MaxThucPham();
+        break;
+    case 6:
+        MacDienMay();
+        break;
+    case 7:
+        MaxMayMac();
+        break;
     }
 }
 //=============================================================================================================================================
@@ -1344,6 +1442,9 @@ int main()
         cout << " 2  tim kiem hang hoa " << endl;
         cout << " 3  cap nhat thong tin hang hoa " << endl;
         cout << " 4  xoa hang hoa  " << endl;
+        cout << " 5 gia tri ton kho lon nhat cua thuc pham " << endl;
+        cout << " 6 gia tri ton kho lon nhat cua dien may" << endl;
+        cout << " 7 gia tri ton kho lon nhat cua may mac " << endl;
         cout << " (^;_;^)  NHAP LUA CHON !!!!! (^;_;^) " << endl;
         cin >> check;
         if (check <= 10 && check >= 1)

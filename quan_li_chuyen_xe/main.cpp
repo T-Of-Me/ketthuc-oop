@@ -11,6 +11,12 @@ protected:
     int SoXe;
 
 public:
+    ChuyenXe(int ma, string ten, int soxe)
+    {
+        this->MaChuyenXe = ma;
+        this->TenTaiXe = ten;
+        this->SoXe = soxe;
+    }
     ChuyenXe(){};
     ~ChuyenXe(){};
     int ReturnMaChuyenXe()
@@ -29,7 +35,7 @@ public:
 
 //==================================================================
 
-class ChuyenXeNoiTinh : public ChuyenXe
+class ChuyenXeNoiTinhNhap : public ChuyenXe
 {
 private:
     int SoTuyen;
@@ -37,18 +43,14 @@ private:
     int DoanhThu;
 
 public:
-    ChuyenXeNoiTinh(){};
-    ~ChuyenXeNoiTinh(){};
-    ChuyenXeNoiTinh(string tentaixe, int ma, int Soxe, int Sotuyen, int Sokm)
+    ChuyenXeNoiTinhNhap(){};
+    ~ChuyenXeNoiTinhNhap(){};
+    ChuyenXeNoiTinhNhap(string tentaixe, int ma, int Soxe, int Sotuyen, int Sokm) : ChuyenXe(ma, tentaixe, Soxe)
     {
-
-        this->TenTaiXe = tentaixe;
-        this->MaChuyenXe = ma;
-        this->SoXe = Soxe;
         this->SoTuyen = Sotuyen;
         this->SoKm = Sokm;
     };
-    friend ostream &operator<<(ostream &out, ChuyenXeNoiTinh x)
+    friend ostream &operator<<(ostream &out, ChuyenXeNoiTinhNhap x)
     {
         out << x.MaChuyenXe << endl;
         out << x.TenTaiXe << endl;
@@ -57,7 +59,7 @@ public:
         out << x.SoKm << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, ChuyenXeNoiTinh &x)
+    friend istream &operator>>(istream &in, ChuyenXeNoiTinhNhap &x)
     {
         cout << " ma chuyen xe :";
         in >> x.MaChuyenXe;
@@ -79,7 +81,7 @@ public:
     }
 };
 //===============================================================================
-class ChuyenXeNoiTinhDoc : public ChuyenXe
+class ChuyenXeNoiTinh : public ChuyenXe
 {
 private:
     int SoTuyen;
@@ -87,11 +89,11 @@ private:
     int DoanhThu;
 
 public:
-    ChuyenXeNoiTinhDoc(){};
-    ~ChuyenXeNoiTinhDoc(){};
+    ChuyenXeNoiTinh(){};
+    ~ChuyenXeNoiTinh(){};
     int ReturnSoTuyen() { return SoTuyen; }
     int ReturnSoKm() { return SoKm; }
-    ChuyenXeNoiTinhDoc(string tentaixe, int ma, int Soxe, int Sotuyen, int Sokm)
+    ChuyenXeNoiTinh(string tentaixe, int ma, int Soxe, int Sotuyen, int Sokm)
     {
 
         this->TenTaiXe = tentaixe;
@@ -100,7 +102,7 @@ public:
         this->SoTuyen = Sotuyen;
         this->SoKm = Sokm;
     };
-    friend ostream &operator<<(ostream &out, ChuyenXeNoiTinhDoc x)
+    friend ostream &operator<<(ostream &out, ChuyenXeNoiTinh x)
     {
         out << x.MaChuyenXe << endl;
         out << x.TenTaiXe << endl;
@@ -109,7 +111,7 @@ public:
         out << x.SoKm << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, ChuyenXeNoiTinhDoc &x)
+    friend istream &operator>>(istream &in, ChuyenXeNoiTinh &x)
     {
 
         in >> x.MaChuyenXe;
@@ -131,7 +133,7 @@ public:
 };
 //===============================================================================
 
-class ChuyenXeNgoaiTinh : public ChuyenXe
+class ChuyenXeNgoaiTinhNhap : public ChuyenXe
 {
 private:
     string NoiDen;
@@ -139,9 +141,9 @@ private:
     int DoanhThu;
 
 public:
-    ChuyenXeNgoaiTinh(){};
-    ~ChuyenXeNgoaiTinh(){};
-    ChuyenXeNgoaiTinh(string tentaixe, int ma, int Soxe, string NoiDen, int songaydiduoc)
+    ChuyenXeNgoaiTinhNhap(){};
+    ~ChuyenXeNgoaiTinhNhap(){};
+    ChuyenXeNgoaiTinhNhap(string tentaixe, int ma, int Soxe, string NoiDen, int songaydiduoc)
     {
 
         this->TenTaiXe = tentaixe;
@@ -150,7 +152,7 @@ public:
         this->NoiDen = NoiDen;
         this->SoNgayDiduoc = songaydiduoc;
     }
-    friend ostream &operator<<(ostream &out, ChuyenXeNgoaiTinh x)
+    friend ostream &operator<<(ostream &out, ChuyenXeNgoaiTinhNhap x)
     {
         out << x.MaChuyenXe << endl;
         out << x.TenTaiXe << endl;
@@ -159,7 +161,7 @@ public:
         out << x.SoNgayDiduoc << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, ChuyenXeNgoaiTinh &x)
+    friend istream &operator>>(istream &in, ChuyenXeNgoaiTinhNhap &x)
     {
         cout << " ma chuyen xe :";
         in >> x.MaChuyenXe;
@@ -181,7 +183,7 @@ public:
     }
 };
 //=========================================================
-class ChuyenXeNgoaiTinhDoc : public ChuyenXe
+class ChuyenXeNgoaiTinh : public ChuyenXe
 {
 private:
     string NoiDen;
@@ -189,7 +191,7 @@ private:
     int DoanhThu;
 
 public:
-    ChuyenXeNgoaiTinhDoc(string tentaixe, int ma, int Soxe, string NoiDen, int songaydiduoc)
+    ChuyenXeNgoaiTinh(string tentaixe, int ma, int Soxe, string NoiDen, int songaydiduoc)
     {
 
         this->TenTaiXe = tentaixe;
@@ -210,10 +212,10 @@ public:
     {
         return DoanhThu;
     }
-    ChuyenXeNgoaiTinhDoc(){};
-    ~ChuyenXeNgoaiTinhDoc(){};
+    ChuyenXeNgoaiTinh(){};
+    ~ChuyenXeNgoaiTinh(){};
 
-    friend ostream &operator<<(ostream &out, ChuyenXeNgoaiTinhDoc x)
+    friend ostream &operator<<(ostream &out, ChuyenXeNgoaiTinh x)
     {
         out << x.MaChuyenXe << endl;
         out << x.TenTaiXe << endl;
@@ -222,7 +224,7 @@ public:
         out << x.SoNgayDiduoc << endl;
         return out;
     }
-    friend istream &operator>>(istream &in, ChuyenXeNgoaiTinhDoc &x)
+    friend istream &operator>>(istream &in, ChuyenXeNgoaiTinh &x)
     {
         in >> x.MaChuyenXe;
         in.ignore();
@@ -242,60 +244,133 @@ public:
         cout << "So KM :" << SoNgayDiduoc << endl;
     }
 };
-//==========================================================================
-void CheckMaXeTonTai()
+int ma;
+//===========================================================================================================
+int CheckMaXeKhongTonTai()
 {
 
-    int ma;
     string s;
-    int check;
-    do
+    cout << endl;
+    cout << "nhap ma chuyen xe de check :";
+    cin >> ma;
+    ifstream File1("ChuyenXe.txt", ios::in);
+    while (File1 >> s)
     {
-        cout << "nhap ma chuyen xe de check :";
-        cin >> ma;
-        ifstream File1("ChuyenXe.txt", ios::in);
-        while (File1 >> s)
+        if (s == "NGOAITINH")
         {
-            if (s == "NGOAITINH")
+            ChuyenXeNgoaiTinh a;
+            File1 >> a;
+            if (a.ReturnMaChuyenXe() == ma)
             {
-                ChuyenXeNgoaiTinhDoc a;
-                File1 >> a;
+                return 0;
+            }
+        }
+        else if (s == "NOITINH")
+        {
+            ChuyenXeNoiTinh b;
+            File1 >> b;
+            if (b.ReturnMaChuyenXe() == ma)
+            {
+                return 0;
+            }
+        }
+    };
+    return 1;
+}
+//=========================================================================================
+class DanhSachChuyenXe
+{
+
+public:
+    void XoaChuyenXe()
+    {
+        do
+        {
+        } while (CheckMaXeKhongTonTai() == 1 && cout << "ma xe khong ton tai");
+
+        ifstream file("ChuyenXe.txt", ios::in);
+        ofstream file1("ChuyenXeTemp.txt", ios::trunc);
+        string s;
+        while (file >> s)
+        {
+            if (s == "NOITINH")
+            {
+                ChuyenXeNoiTinh a;
+                file >> a;
                 if (a.ReturnMaChuyenXe() == ma)
                 {
-                    cout << "ma xe ton tai " << endl;
-                    check = 0;
+                    cout << "loading........... " << endl;
                 }
                 else
                 {
-                    check = 1;
+                    file1 << "NOITINH" << endl;
+                    file1 << a;
                 }
             }
-            else if (s == "NOITINH")
+            else
             {
-                ChuyenXeNoiTinhDoc b;
-                File1 >> b;
-                if (b.ReturnMaChuyenXe() == ma)
+                ChuyenXeNgoaiTinh a;
+                file >> a;
+                if (a.ReturnMaChuyenXe() == ma)
                 {
-                    cout << "ma xe ton tai " << endl;
-                    check = 0;
+                    cout << "loading........... " << endl;
                 }
                 else
                 {
-                    check = 1;
+                    file1 << "NGOAITINH" << endl;
+                    file1 << a;
                 }
             }
         }
-        File1.close();
-    } while (check == 0);
-}
+        file.close();
+        file1.close();
+        ofstream file2("ChuyenXe.txt", ios::trunc);
+        ifstream file3("ChuyenXeTemp.txt", ios::in);
+        while (file3 >> s)
+        {
+            if (s == "NOITINH")
+            {
+                ChuyenXeNoiTinh a;
+                file3 >> a;
+                file2 << "NOITINH" << endl;
+                file2 << a;
+            }
+            else
+            {
+                ChuyenXeNgoaiTinh a;
+                file3 >> a;
+                file2 << "NGOAITINH" << endl;
+                file2 << a;
+            }
+        }
+        file2.close();
+        file3.close();
+    }
+};
+
+//==========================================================================
+
+//==========================================================================
+
 //========================================================
+
+//===============================================================
 void NoiTinh()
 {
     ofstream File1;
     ofstream File2;
     File1.open("ChuyenXe.txt", ios::app);
-    ChuyenXeNoiTinh x;
-    CheckMaXeTonTai();
+    ChuyenXeNoiTinhNhap x;
+    do
+    {
+        CheckMaXeKhongTonTai();
+        if (CheckMaXeKhongTonTai() == 1)
+        {
+            cout << " ma xe khong ton tai -------> co the them " << endl;
+            break;
+        }
+    } while (CheckMaXeKhongTonTai() == 0);
+
     cin >> x;
     File1 << "NOITINH" << endl;
     File1 << x;
@@ -309,8 +384,8 @@ void NgoaiTinh()
     ofstream File2;
     File1.open("ChuyenXe.txt", ios::app);
     File2.open("DoanhThu.txt", ios::app);
-    CheckMaXeTonTai();
-    ChuyenXeNgoaiTinh x;
+    CheckMaXeKhongTonTai();
+    ChuyenXeNgoaiTinhNhap x;
     cin >> x;
     File1 << "NGOAITINH" << endl;
     File1 << x;
@@ -341,7 +416,7 @@ void TImKiemCHuyenXe(int ma)
     {
         if (x == "NOITINH")
         {
-            ChuyenXeNoiTinhDoc a;
+            ChuyenXeNoiTinh a;
             File >> a;
             if (a.ReturnMaChuyenXe() == ma)
             {
@@ -350,7 +425,7 @@ void TImKiemCHuyenXe(int ma)
         }
         else if (x == "NGOAITINH")
         {
-            ChuyenXeNgoaiTinhDoc b;
+            ChuyenXeNgoaiTinh b;
             File >> b;
             if (b.ReturnMaChuyenXe() == ma)
             {
@@ -369,8 +444,8 @@ void DocDanhSachChuyenXe()
     ifstream File1;
     File1.open("ChuyenXe.txt", ios::in);
     string s;
-    ChuyenXeNgoaiTinhDoc a;
-    ChuyenXeNoiTinhDoc b;
+    ChuyenXeNgoaiTinh a;
+    ChuyenXeNoiTinh b;
     while (File1 >> s)
     {
         if (s == "NOITINH")
@@ -397,8 +472,8 @@ void ChinhSuaThongTin()
     cout << " 2  sua thong tin chuyen xe ngoai tuyen " << endl;
     int check = 0;
     cin >> check;
-    ChuyenXeNgoaiTinhDoc a[100];
-    ChuyenXeNoiTinhDoc b[100];
+    ChuyenXeNgoaiTinh a[100];
+    ChuyenXeNoiTinh b[100];
     bool pass = false;
     if (check == 1)
     {
@@ -582,6 +657,9 @@ void menu()
     case 6:
         DocDanhSachChuyenXe();
         break;
+    case 7:
+        DanhSachChuyenXe a;
+        a.XoaChuyenXe();
     default:
         cout << "(=^_^=) THANH YOU DA SU DUNG DICH VU (=^_^=)" << endl;
         break;
@@ -602,9 +680,10 @@ int main()
         cout << " 4 tim kiem chuyen xe " << endl;
         cout << " 5 chinh sua thong tin ten tai xe " << endl;
         cout << " 6 doc danh sach chuyen xe " << endl;
+        cout << " 7 xoa chuyen xe " << endl;
         cout << " (^;_;^)  NHAP LUA CHON !!!!! (^;_;^) " << endl;
         cin >> check;
-        if (check <= 6 && check >= 1)
+        if (check <= 10 && check >= 1)
         {
             menu();
             keeping = true;
