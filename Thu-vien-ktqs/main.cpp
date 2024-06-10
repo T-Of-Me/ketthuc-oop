@@ -11,7 +11,7 @@ void sort(T a[50], int m)
     {
         for (int j = 0; j < m - 1 - i; j++)
         {
-            if (a[j] < a[j + 1])
+            if (a[j] > a[j + 1])
             {
                 swap(a[j], a[j + 1]);
             }
@@ -26,7 +26,7 @@ void sortGiam(T a[50], int m)
     {
         for (int j = 0; j < m - 1 - i; j++)
         {
-            if (a[j] > a[j + 1])
+            if (a[j] < a[j + 1])
             {
                 swap(a[j], a[j + 1]);
             }
@@ -51,17 +51,17 @@ public:
         cout << "So Luong :" << SoLuong << endl;
         cout << "Nha xuat ban :" << NhaXuatBan << endl;
     }
-    bool operator<(Sach b)
+    bool operator>(Sach b)
     {
-        if (nam < b.nam)
+        if (nam > b.nam)
         {
             return true;
         }
-        else if (thang < b.thang)
+        else if (thang > b.thang)
         {
             return true;
         }
-        else if (ngay < b.ngay)
+        else if (ngay > b.ngay)
         {
             return true;
         }
@@ -70,9 +70,9 @@ public:
             return false;
         }
     }
-    bool operator>(Sach b)
+    bool operator<(Sach b)
     {
-        if (SoLuong > b.SoLuong)
+        if (SoLuong < b.SoLuong)
         {
             return true;
         }

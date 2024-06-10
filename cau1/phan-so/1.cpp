@@ -74,4 +74,13 @@ PS PS::operator+(int &songuyen)
     return *this + sohuuti;
 }
 
-
+int main()
+{
+    PS a;
+    PS b;
+    PS c;
+    cin >> a;
+    cin >> b;
+    c = a + b;
+    cout << c;
+}

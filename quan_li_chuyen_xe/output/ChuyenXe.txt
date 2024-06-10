@@ -1,15 +1,3 @@
-NOITINH
-90
- phan trau trinh 
-34464
-4
-32
-NGOAITINH
-6
-tran van thuong 
-6
-nam dinh 
-12
 NGOAITINH
 3
 ha minh trung 
@@ -22,3 +10,15 @@ tran manh hung
 324
 quang tri 
 9
+NGOAITINH
+6
+phan thanh tung
+6
+nam dinh 
+12
+NOITINH
+2
+ha
+424
+3423
+234

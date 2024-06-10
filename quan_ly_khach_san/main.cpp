@@ -255,8 +255,8 @@ public:
             }
         }
         cout << "Khach hang chua thue phong!!!!!" << endl;
-        return 0;
         File1.close();
+        return 0;
     }
 
     void KiemTraThongTinKhachHangDaThuePhong()

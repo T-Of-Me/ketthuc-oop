@@ -1,9 +1,3 @@
-NOITINH
-90
- phan trau trinh 
-34464
-4
-32
 NGOAITINH
 6
 tran van thuong 
@@ -21,4 +15,10 @@ NGOAITINH
 tran manh hung 
 324
 quang tri 
+9
+NGOAITINH
+4
+
+324
+
 9

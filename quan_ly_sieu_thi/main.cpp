@@ -308,11 +308,11 @@ public:
     {
         return a.TriTonKho() < b.TriTonKho();
     }
-    friend void CapNhatThongTin();
-    friend void XoaHangHoa();
+    // friend void CapNhatThongTin();
+    // friend void XoaHangHoa();
     friend int CheckMaHangHoaTonTai(int c, int b, string a);
-    friend void TimKiem();
-    friend void CapNhatThongTinDienMay();
+    // friend void TimKiem();
+    // friend void CapNhatThongTinDienMay();
     DienMay(int mahang, int soluong, int dongia, int thoigianbaohanh, int congxuat, string tenhang, string chungloai)
     {
         this->MaHang = mahang;

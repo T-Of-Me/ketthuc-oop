@@ -1,9 +1,5 @@
 #include <iostream>
 using namespace std;
-#include <fstream>
-#include <string.h>
-#include <cstring>
-#include <math.h>
 
 class matran
 {
@@ -12,94 +8,100 @@ private:
     int phantu[100][100];
 
 public:
-    matran operator+(matran a);
-    matran operator-(matran a);
-    matran operator*(matran a);
-    friend ostream &operator<<(ostream &os, matran &mt);
-    friend istream &operator>>(istream &is, matran &mt);
+    matran() {}
+    matran(int h, int c) : hang(h), cot(c) {}
+
+    matran operator+(const matran &a);
+    matran operator-(const matran &a);
+
+    friend ostream &operator<<(ostream &out, const matran &mt);
+    friend istream &operator>>(istream &in, matran &mt);
 };
 
-matran matran::operator+(matran a)
+matran matran::operator+(const matran &a)
 {
-    int i, j;
-    matran mtkq;
     if (hang != a.hang || cot != a.cot)
     {
-        cout << "Khong the cong 2 ma tran khac kich thuoc";
-        exit(1);
+        cout << "Khong the cong 2 ma tran khac kich thuoc" << endl;
+        return matran(0, 0);
     }
-    else
-    {
-        for (i = 0; i < hang; i++)
-            for (j = 0; j < cot; j++)
-                mtkq.phantu[i][j] = phantu[i][j] + a.phantu[i][j];
-        return mtkq;
-    };
-};
-matran matran::operator-(matran a)
+
+    matran mtkq(hang, cot);
+    for (int i = 0; i < hang; i++)
+        for (int j = 0; j < cot; j++)
+            mtkq.phantu[i][j] = phantu[i][j] + a.phantu[i][j];
+
+    return mtkq;
+}
+
+matran matran::operator-(const matran &a)
 {
-    int i, j;
-    matran mtkq;
     if (hang != a.hang || cot != a.cot)
     {
-        cout << "Khong the cong 2 ma tran khac kich thuoc";
-        exit(1);
+        cout << "Khong the tru 2 ma tran khac kich thuoc" << endl;
+        return matran(0, 0);
     }
-    else
-    {
-        for (i = 0; i < hang; i++)
-            for (j = 0; j < cot; j++)
-                mtkq.phantu[i][j] = phantu[i][j] - a.phantu[i][j];
 
-        return mtkq;
-    };
-};
+    matran mtkq(hang, cot);
+    for (int i = 0; i < hang; i++)
+        for (int j = 0; j < cot; j++)
+            mtkq.phantu[i][j] = phantu[i][j] - a.phantu[i][j];
 
-matran matran::operator*(matran a)
+    return mtkq;
+}
+
+ostream &operator<<(ostream &out, const matran &mt)
 {
-    int i, j, k;
-    matran mtkq;
- 
-    if (cot != a.hang)
+    for (int i = 0; i < mt.hang; i++)
     {
-        cout << "Khong the thuc hien nhan 2 ma tran nay";
-        exit(1);
-    }
-    else
-    {
-        for (i = 0; i < hang; i++)
-            for (j = 0; j < a.cot; j++)
-            {
-                for (k = 0; k < cot; k++)
-                    mtkq.phantu[i][j] = mtkq.phantu[i][j] + phantu[i][k] * a.phantu[k][j];
-            };
-        return mtkq;
-    };
-};
-
-ostream &operator<<(ostream &out, matran &mt)
-{
-    int i, j;
-    for (i = 0; i < mt.hang; i++)
-    {
-        for (j = 0; j < mt.cot; j++)
-            out << mt.phantu[i][j];
+        for (int j = 0; j < mt.cot; j++)
+            out << mt.phantu[i][j] << " ";
         out << endl;
-    };
+    }
     return out;
-};
+}
+
 istream &operator>>(istream &in, matran &mt)
 {
-    int i, j;
-    cout << "Nhap so hang ma tran: " << endl;
+    cout << "Nhap so hang ma tran: ";
     in >> mt.hang;
-    cout << "Nhap so cot ma tran: " << endl;
+    cout << "Nhap so cot ma tran: ";
     in >> mt.cot;
-    for (i = 0; i < mt.hang; i++)
-        for (j = 0; j < mt.cot; j++)
+
+    for (int i = 0; i < mt.hang; i++)
+        for (int j = 0; j < mt.cot; j++)
         {
-            cout << "Nhap phan tu hang " << i << " cot " << j << endl;
-            in >> mt.phantu[i][j];
-        };
+            cout << "Nhap phan tu hang " << i << " cot " << j << ": ";
+            do
+            {
+                in >> mt.phantu[i][j];
+                if (mt.phantu[i][j] < 0)
+                {
+                    cout << "kí tu khong hop le nhap lai " << endl;
+                    cout << "Nhap phan tu hang " << i << " cot " << j << ": ";
+                }
+            } while (mt.phantu[i][j] < 0);
+        }
+
     return in;
 }
+
+int main()
+{
+    matran x, y;
+    cout << "Nhap ma tran x:" << endl;
+    cin >> x;
+    cout << "Nhap ma tran y:" << endl;
+    cin >> y;
+
+    matran kq = x + y;
+    cout << "Tong cua hai ma tran:" << endl;
+    cout << kq;
+
+    return 0;
+}
+
+
+
+
+
